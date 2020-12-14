@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>JBlog ±âº»Á¤º¸ °ü¸®</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JBlog ê¸°ë³¸ì •ë³´ ê´€ë¦¬</title>
 <Link rel="stylesheet" href="css/theme.css">
 </head>
 
@@ -10,15 +10,15 @@
 	<center>
 		<table background="images/kubrickheader.jpg" width="760" height="200" border="0" cellpadding="0" cellspacing="0">
 			<tr><td height="60">&nbsp;</td></tr>
-			<!-- ºí·Î±× Á¦¸ñ°ú ÅÂ±× ½ÃÀÛ -->
-			<tr><td height="60" class="blogtitle">GurumÀÇ ºí·Î±×</td></tr>
-			<tr><td height="20" class="blogtag">ÀÚ¹Ù, ¼­ºí¸´, ½ºÇÁ¸µ</td></tr>
-			<!-- ºí·Î±× Á¦¸ñ°ú ÅÂ±× ³¡ -->
-			
+			<!-- ë¸”ë¡œê·¸ ì œëª©ê³¼ íƒœê·¸ ì‹œì‘ -->
+			<tr><td height="60" class="blogtitle">Gurumì˜ ë¸”ë¡œê·¸</td></tr>
+			<tr><td height="20" class="blogtag">ìë°”, ì„œë¸”ë¦¿, ìŠ¤í”„ë§</td></tr>
+			<!-- ë¸”ë¡œê·¸ ì œëª©ê³¼ íƒœê·¸ ë -->
+
 			<tr>
 				<td align="right" height="60">
-				<a href="logout.do">·Î±×¾Æ¿ô</a>&nbsp;&nbsp;
-				<a href="blogMain.do">³» ºí·Î±× ¸ŞÀÎ</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="logout.do">ë¡œê·¸ì•„ì›ƒ</a>&nbsp;&nbsp;
+				<a href="blogMain.do">ë‚´ ë¸”ë¡œê·¸ ë©”ì¸</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</td>
 			</tr>
 		</table>
@@ -27,12 +27,12 @@
 			<tr>
 				<td height="10" width="20">&nbsp;</td>
 				<td width="530" valign="top" class="tdcontent">
-					<!-- ¸Ş´º ½ÃÀÛ --> 
-					<a class="title" href="blogadmin_basic.html"><b>±âº»¼³Á¤</b></a>&nbsp;&nbsp;
-					<a class="title" href="getCategoryList.do"><b>Ä«Å×°í¸®</b></a>&nbsp;&nbsp;
-					<a class="title" href="addPostView.do"><b>±ÛÀÛ¼º</b></a>&nbsp;&nbsp; 
-					<a class="title" href="javascript:popup();"><b>ºí·Î±×»èÁ¦</b></a>&nbsp;&nbsp;
-					<!-- ¸Ş´º ³¡ -->
+					<!-- ë©”ë‰´ ì‹œì‘ -->
+					<a class="title" href="blogadmin_basic.html"><b>ê¸°ë³¸ì„¤ì •</b></a>&nbsp;&nbsp;
+					<a class="title" href="getCategoryList.do"><b>ì¹´í…Œê³ ë¦¬</b></a>&nbsp;&nbsp;
+					<a class="title" href="addPostView.do"><b>ê¸€ì‘ì„±</b></a>&nbsp;&nbsp;
+					<a class="title" href="javascript:popup();"><b>ë¸”ë¡œê·¸ì‚­ì œ</b></a>&nbsp;&nbsp;
+					<!-- ë©”ë‰´ ë -->
 				</td>
 			</tr>
 			<tr>
@@ -41,47 +41,47 @@
 			<tr>
 				<td height="10">&nbsp;</td>
 				<td>
-					<!-- ÀÛ¾÷ È­¸é  ½ÃÀÛ -->
+					<!-- ì‘ì—… í™”ë©´  ì‹œì‘ -->
 					<form action="updateBlog.do" method="post">
 						<table width="720" border="0" cellpadding="0" cellspacing="0">
 							<tr>
-								<td width="150" class="inputlabel">ºí·Î±× Á¦¸ñ :</td>
+								<td width="150" class="inputlabel">ë¸”ë¡œê·¸ ì œëª© :</td>
 								<td><input class="inputtext" type="text" size="40" name="title"></td>
 							</tr>
 							<tr>
-								<td width="150" class="inputlabel">ºí·Î±× ÅÂ±× :</td>
+								<td width="150" class="inputlabel">ë¸”ë¡œê·¸ íƒœê·¸ :</td>
 								<td><input class="inputtext" type="text" size="50" name="tag"></td>
 							</tr>
 							<tr>
-								<td width="150" class="inputlabel">¸ŞÀÎÆäÀÌÁö Æ÷½ºÆ® :</td>
+								<td width="150" class="inputlabel">ë©”ì¸í˜ì´ì§€ í¬ìŠ¤íŠ¸ :</td>
 								<td><input class="inputtext" type="text" size="4" name="cntDisplayPost"></td>
 							</tr>
 							<tr>
-								<td width="150" class="inputlabel">·Î°íÀÌ¹ÌÁö :</td>
+								<td width="150" class="inputlabel">ë¡œê³ ì´ë¯¸ì§€ :</td>
 								<td>&nbsp;<img height="80" src="images/j2eelogo.jpg" border="0"></td>
 							</tr>
 							<tr>
 								<td width="150" class="inputlabel">&nbsp;</td>
 								<td>
-									<input class="inputtext" type="text" size="40" name="logoFile"> 
-									<input type="submit" value="Ã£¾Æº¸±â"></td>
+									<input class="inputtext" type="text" size="40" name="logoFile">
+									<input type="submit" value="ì°¾ì•„ë³´ê¸°"></td>
 							</tr>
 							<tr>
 								<td height="40" colspan="10" align="center">
-								<input type="submit" value="È®ÀÎ"></td>
+								<input type="submit" value="í™•ì¸"></td>
 							</tr>
 						</table>
-					</form> <!-- ÀÛ¾÷ È­¸é  ³¡ -->
+					</form> <!-- ì‘ì—… í™”ë©´  ë -->
 				</td>
 			</tr>
 			<tr>
 				<td height="10" colspan="10">&nbsp;</td>
 			</tr>
 		</table>
-		
+
 		<table background="images/kubrickfooter.jpg" width="760" height="63" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td class="blogfooter">J2EE ÀÌ¾ß±â is powered by JBlog</td>
+				<td class="blogfooter">J2EE ì´ì•¼ê¸° is powered by JBlog</td>
 			</tr>
 		</table>
 	</center>
