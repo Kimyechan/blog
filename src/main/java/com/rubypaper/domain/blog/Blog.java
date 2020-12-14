@@ -1,5 +1,6 @@
 package com.rubypaper.domain.blog;
 
+import com.rubypaper.domain.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,10 @@ public class Blog {
 
     @Id @GeneratedValue
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    User user;
 
     private String title;
 
