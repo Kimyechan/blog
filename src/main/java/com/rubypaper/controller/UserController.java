@@ -1,16 +1,22 @@
 package com.rubypaper.controller;
 
 import com.rubypaper.domain.user.User;
+import com.rubypaper.service.BlogService;
 import com.rubypaper.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@RequiredArgsConstructor
+@SessionAttributes({"user", "myBlog"})
 public class UserController {
+    private final BlogService blogService;
 
     @GetMapping("/index")
     public String index(){
@@ -29,7 +35,9 @@ public class UserController {
         System.out.println("---> loginSuccess 이동");
         System.out.println("---> role " + user.getRole().toString().equals("ROLE_ADMIN"));
 
+        model.addAttribute("myBlog", blogService.findMyBlog(user.getId()));
         model.addAttribute("user", user);
+
         if (user != null && user.getRole().toString().equals("ROLE_ADMIN")){
             return "redirect:/admin"; // 관리자 로그인 임시
         } else if(user != null && user.getRole().toString().equals("ROLE_MEMBER")){
@@ -48,13 +56,13 @@ public class UserController {
     @GetMapping("/admin")
     public String adminMain(){
         System.out.println("---> adminMain 이동");
-        return "blogsystem_search";
+        return "redirect:/blog/view/list";
     }
 
     @PostMapping("/user")
     public String memberMain(){
         System.out.println("---> userMain 이동");
-        return "blogsystem_search";
+        return "redirect:/blog/view/list";
     }
 
 }

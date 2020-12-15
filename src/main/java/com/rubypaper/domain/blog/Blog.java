@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"USER_ID"}))
 @SequenceGenerator(
         name = "BLOG_SEQ_GENERATOR",
         sequenceName = "BLOG_SEQ",

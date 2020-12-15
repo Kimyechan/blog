@@ -1,21 +1,25 @@
 package com.rubypaper.controller;
 
 import com.rubypaper.domain.blog.Blog;
+import com.rubypaper.domain.user.User;
 import com.rubypaper.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.dom4j.rule.Mode;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/blog")
+@SessionAttributes({"user", "myBlog"})
 public class BlogController {
 
     private final BlogService blogService;
@@ -44,17 +48,21 @@ public class BlogController {
     }
 
     @PostMapping("/create")
-    public String blogCreate(String title, String username, String action) {
+    public String blogCreate(@AuthenticationPrincipal(expression = "user") User user,
+                             String title, String action, Model model) {
+
         if (action.equals("create")){
-            blogService.createBlog(title, username);
+            model.addAttribute("user", user);
+            blogService.createBlog(title, user);
         }
         return "redirect:/blog/view/list";
     }
 
     @GetMapping("/view/myBlog")
-    public String myBlog(Long userId, Model model){
-        Blog myBlog = blogService.findMyBlog(userId);
+    public String myBlog(Model model){
+        User user = (User) model.getAttribute("user");
 
+        Blog myBlog = blogService.findMyBlog(user.getId());
         model.addAttribute("myBlog", myBlog);
 
         return "blogmain_detail";

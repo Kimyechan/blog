@@ -1,6 +1,7 @@
 package com.rubypaper.service;
 
 import com.rubypaper.domain.blog.Blog;
+import com.rubypaper.domain.user.User;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface BlogService {
     /**
      * 블로그 등록
      */
-    void createBlog(String title, String username);
+    void createBlog(String title, User username);
 
     void deleteBlog();
 

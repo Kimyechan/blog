@@ -1,5 +1,6 @@
 package com.rubypaper.domain.user;
 
+import com.rubypaper.domain.blog.Blog;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
