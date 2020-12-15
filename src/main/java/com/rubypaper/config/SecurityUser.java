@@ -16,7 +16,7 @@ public class SecurityUser extends org.springframework.security.core.userdetails.
     private User user;
 
     public SecurityUser(User user) {
-        super(user.getUserid(), "{noop}"+user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
+        super(user.getUserid(), user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
         this.user = user;
         System.out.println("user.role" + user.getRole());
     }

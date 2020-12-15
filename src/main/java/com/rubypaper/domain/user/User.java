@@ -24,7 +24,9 @@ public class User{
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+//    @Column(columnDefinition = "varchar(255) default 'ROLE_MEMBER'")
+    private Role role=Role.ROLE_MEMBER;
 
-    private boolean enabled;
+//    @Column(columnDefinition = "boolean default true")
+    private boolean enabled=true;
 }
