@@ -1,5 +1,7 @@
 package com.rubypaper.service;
 
+import com.rubypaper.domain.post.Post;
+
 public interface PostService {
 
     /**
@@ -9,9 +11,9 @@ public interface PostService {
 
     void searchPost();
 
-    void registerPost();
+    Post registerPost(Post post);
 
-    void updatePost();
+    Post updatePost(Long id, Post post);
 
-    void deletePost();
+    void deletePost(Long id);
 }
