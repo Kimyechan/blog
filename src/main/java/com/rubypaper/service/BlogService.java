@@ -19,9 +19,11 @@ public interface BlogService {
     /**
      * 블로그 등록
      */
-    void registerBlog();
+    void createBlog(String title, String username);
 
     void deleteBlog();
 
     void updateBlog();
+
+    Blog findMyBlog(Long userId);
 }

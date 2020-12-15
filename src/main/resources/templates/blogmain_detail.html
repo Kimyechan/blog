@@ -3,11 +3,11 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>JBlog 블로그 메인</title>
-	<Link rel="stylesheet" href="css/theme.css">
+	<Link rel="stylesheet" href="/css/theme.css">
 </head>
-<body background="images/kubrickbgcolor.jpg">
+<body background="/images/kubrickbgcolor.jpg">
 <center>
-	<table background="images/kubrickheader.jpg"
+	<table background="/images/kubrickheader.jpg"
 		 width="760" height="200" border="0" cellpadding="0" cellspacing="0">
       <tr>	<td height="60">&nbsp;</td></tr>
       <!-- 블로그 제목과 태그 시작 -->
@@ -16,7 +16,7 @@
       <!-- 블로그 제목과 태그 끝 -->      
       <tr>	<td height="60">&nbsp;</td></tr>
     </table>
-    <table background="images/kubrickbg.jpg" width="760" height="300" border="0" cellpadding="0" cellspacing="0">
+    <table background="/images/kubrickbg.jpg" width="760" height="300" border="0" cellpadding="0" cellspacing="0">
       <tr><td height="10">&nbsp;</td></tr>
       <tr>
       	<td width="20">&nbsp;</td>
@@ -66,9 +66,9 @@
       	<!-- 로그인, 관리자 메뉴, 로고, 카테고리 시작 -->
       	<table cellpadding="0" cellspacing="0">
       		<tr><td>
-      		<a href="#">로그인</a>&nbsp;&nbsp;<a href="#">블로그 관리</a></td></tr>
+      		<a href="#">로그인</a>&nbsp;&nbsp;<a th:href="@{/blog/managing/basic}">블로그 관리</a></td></tr>
       		<tr><td height="5">&nbsp;</td></tr>
-      		<tr><td><img height="80" src="images/j2eelogo.jpg" border="0"></td></tr>
+      		<tr><td><img height="80" src="/images/j2eelogo.jpg" border="0"></td></tr>
       		<tr><td height="5">&nbsp;</td></tr>
       		<tr><td class="categorytitle">카테고리</td></tr>
       		<tr><td class="categoryitem"><a class="title" href="#">자바</a></td></tr>
@@ -76,13 +76,13 @@
       		<tr><td class="categoryitem"><a class="title" href="#">소프트웨어 엔지니어링</a></td></tr>
       		<tr><td class="categoryitem"><a class="title" href="#">미분류</a></td></tr>
       		<tr><td height="5">&nbsp;</td></tr>
-      		<tr><td align="center"><img width="80" src="images/logo.jpg" border="0"></td></tr>
+      		<tr><td align="center"><img width="80" src="/images/logo.jpg" border="0"></td></tr>
       	</table>
       	<!-- 로그인, 관리자 메뉴, 로고, 카테고리 끝 -->
       	</td>
       </tr>
     </table>
-    <table background="images/kubrickfooter.jpg" width="760" height="63" border="0" cellpadding="0" cellspacing="0">
+    <table background="/images/kubrickfooter.jpg" width="760" height="63" border="0" cellpadding="0" cellspacing="0">
       <tr>
       	<td class="blogfooter">J2EE 이야기 is powered by JBlog</td>
       </tr>

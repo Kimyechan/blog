@@ -1,20 +1,31 @@
 package com.rubypaper.domain.blog;
 
+import com.rubypaper.domain.category.Category;
 import com.rubypaper.domain.user.User;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
+@SequenceGenerator(
+        name = "BLOG_SEQ_GENERATOR",
+        sequenceName = "BLOG_SEQ",
+        initialValue = 1, allocationSize = 1)
 public class Blog {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "BLOG_SEQ_GENERATOR")
+    @Column(name = "BLOG_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     User user;
 
@@ -28,4 +39,7 @@ public class Blog {
     private BlogStatus status;
 
     private String fileName;
+
+    @OneToMany(mappedBy = "blog")
+    private List<Category> categories = new ArrayList<>();
 }

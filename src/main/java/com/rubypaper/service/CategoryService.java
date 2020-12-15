@@ -1,10 +1,11 @@
 package com.rubypaper.service;
 
+
 public interface CategoryService {
 
     void searchCategory();
 
-    void registerCategory();
+    void createCategory();
 
     void updateCategory();
 
