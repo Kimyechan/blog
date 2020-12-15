@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class UserController {
     private final BlogService blogService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/index")
     public String index(){
         return "blogsystem_search";
@@ -62,7 +65,22 @@ public class UserController {
     @PostMapping("/user")
     public String memberMain(){
         System.out.println("---> userMain 이동");
+
         return "redirect:/blog/view/list";
+
+//        return "blogsystem_search";
+    }
+
+    @GetMapping("/join")
+    public void join(){
+        System.out.println("---> join 이동");
+    }
+
+    @PostMapping("/joinSuccess")
+    public void joinSuccess(User user){
+        userService.signUp(user);
+        System.out.println("---> joinSuccess 이동");
+
     }
 
 }
