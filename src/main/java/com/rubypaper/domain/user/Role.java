@@ -2,5 +2,5 @@ package com.rubypaper.domain.user;
 
 
 public enum Role {
-    ADMIN, MEMBER
+    ROLE_ADMIN, ROLE_MEMBER
 }
