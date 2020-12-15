@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserController {
 
-    @GetMapping("/")
-    public String index(){
-        return "blogsystem_search";
-    }
+//    @GetMapping("/")
+//    public String index(){
+//        return "blogsystem_search";
+//    }
 
     @GetMapping("/login")
     public String login(){

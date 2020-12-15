@@ -88,8 +88,4 @@ public class BlogController {
         return "blogadmin_write";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
 }
