@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequiredArgsConstructor
-@SessionAttributes({"user", "myBlog"})
+@SessionAttributes({"user", "myBlogCreated"})
 public class UserController {
     private final BlogService blogService;
 
@@ -35,7 +35,12 @@ public class UserController {
         System.out.println("---> loginSuccess 이동");
         System.out.println("---> role " + user.getRole().toString().equals("ROLE_ADMIN"));
 
-        model.addAttribute("myBlog", blogService.findMyBlog(user.getId()));
+        if(blogService.findMyBlog(user.getId()) != null) {
+            model.addAttribute("myBlogCreated", true);
+        } else {
+            model.addAttribute("myBlogCreated", false);
+        }
+
         model.addAttribute("user", user);
 
         if (user != null && user.getRole().toString().equals("ROLE_ADMIN")){
@@ -45,7 +50,6 @@ public class UserController {
         } else {
             return "login"; // 둘 다 아닐 때
         }
-//        return "loginSuccess";
     }
 
     @GetMapping("/accessDenied")
