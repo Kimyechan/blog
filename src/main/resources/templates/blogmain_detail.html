@@ -5,9 +5,9 @@
 	<title>JBlog 블로그 메인</title>
 	<Link rel="stylesheet" href="/css/theme.css">
 </head>
-<body background="images/kubrickbgcolor.jpg">
+<body background="/images/kubrickbgcolor.jpg">
 <center>
-	<table background="images/kubrickheader.jpg"
+	<table background="/images/kubrickheader.jpg"
 		 width="760" height="200" border="0" cellpadding="0" cellspacing="0">
       <tr>	<td height="60">&nbsp;</td></tr>
       <!-- 블로그 제목과 태그 시작 -->
@@ -23,25 +23,24 @@
       	<td width="530" valign="top">
 	      	<!-- 포스트 시작 -->
 	      	<table height="10" border="0" cellpadding="0" cellspacing="0">
-	      		<tr><td class="posttitle">JavaOne 컨퍼런스가 열립니다.</td></tr>
-	      		<tr><td class="postdate">2006/06/06</td></tr>
-	      		<tr><td class="postcontent"> 6월 27일부터 30일까지 샌프란시스코 모스콘센터에서 2005 JavaOneSM 컨퍼런스가 열립니다.
-	      		심도깊은 강의와 실생활에서의 혁신, 공상적인 관점에 이르기까지 Java의 강력함을 발견할 수 있습니다.
-	      		컨퍼런스에 참가하셔서 Java 탄생 10주년을 축하해주세요. 또한, 전세계의 전문가들, 혁신자들과 의견을
-	      		교환할 수 있는 좋은 기회가 될 것입니다.</td></tr>
+	      		<tr><td class="posttitle" th:text="${post.title}"></td></tr>
+	      		<tr><td class="postdate" th:inline="text">[[${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm')}]]</td></tr>
+	      		<tr><td class="postcontent" th:text="${post.content}"></td></tr>
 	      		<tr><td height="5">&nbsp;</td></tr>
-	      		<tr><td class="postwriter">posted by 관리자 in J2EE, 덧글 1</td></tr>
+				<tr><td class="postwriter">posted by <span th:text="${post.id}">관리자</span> in J2EE, 덧글 0개</td></tr>
 	      		<tr><td height="5">&nbsp;</td></tr>
 	      		<tr><td height="5">
-		      		<!-- 덧글 보여주기 시작 -->
-		      		<table height="20" border="0" cellpadding="0" cellspacing="0">
+		      		<!-- 덧글 없으면 숨기기  -->
+					<!--
+		      		<table  height="20" border="0" cellpadding="0" cellspacing="0">
 		      			<tr><td class="tdcontent">commented by 손님 at 2006/06/06</td></tr>
 		      			<tr><td class="tdcontent">안녕하세요. 좋은글 고맙습니다.</td></tr>
 		      		</table>
+		      		-->
 		      		<!-- 덧글 보여주기  끝 -->
 	      		</td></tr>
 	      		<tr><td height="5">
-		      		<!-- �� ���� ���� -->
+		      		<!-- 새 덧글 창 -->
 		      		<table width="500" height="20" border="0" cellpadding="0" cellspacing="0">
 		      			<tr><td height="5">&nbsp;</td></tr>
 		      			<tr>
