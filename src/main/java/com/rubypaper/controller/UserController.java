@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserController {
 
-//    @GetMapping("/")
-//    public String index(){
-//        return "blogsystem_search";
-//    }
+    @GetMapping("/index")
+    public String index(){
+        return "blogsystem_search";
+    }
 
     @GetMapping("/login")
     public String login(){
@@ -25,13 +25,14 @@ public class UserController {
 
 
     @GetMapping("/loginSuccess")
-    public String loginSuccess(User user, Model model){
+    public String loginSuccess(@AuthenticationPrincipal(expression = "user") User user, Model model){
         System.out.println("---> loginSuccess 이동");
+        System.out.println("---> role " + user.getRole().toString().equals("ROLE_ADMIN"));
 
         model.addAttribute("user", user);
-        if (user != null && user.getRole().equals("ADMIN")){
+        if (user != null && user.getRole().toString().equals("ROLE_ADMIN")){
             return "redirect:/admin"; // 관리자 로그인 임시
-        } else if(user != null && user.getRole().equals("User")){
+        } else if(user != null && user.getRole().toString().equals("ROLE_MEMBER")){
             return "redirect:/user"; // 회원 로그인 임시
         } else {
             return "login"; // 둘 다 아닐 때
@@ -47,7 +48,7 @@ public class UserController {
     @GetMapping("/admin")
     public String adminMain(){
         System.out.println("---> adminMain 이동");
-        return "blogadmin_basic";
+        return "blogsystem_search";
     }
 
     @PostMapping("/user")
