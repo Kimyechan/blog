@@ -9,12 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -60,18 +58,56 @@ public class BlogController {
     @GetMapping("/view/myBlog")
     public String myBlog(Model model){
         User user = (User) model.getAttribute("user");
+        Optional<Blog> blog = blogService.findMyBlog(user.getId());
 
-        Blog myBlog = blogService.findMyBlog(user.getId());
-        model.addAttribute("myBlog", myBlog);
+        if(blog.isPresent()) {
+            model.addAttribute("blog", blog.get());
+            model.addAttribute("isMyBlog", true);
+        } else {
+            return "redirect:/blog/view/list";
+        }
+
+        return "blogmain_detail";
+    }
+
+    @GetMapping("/view/selectedBlog")
+    public String selectBlog(@RequestParam("id") Long id, Model model) {
+        Optional<Blog> selectedBlog = blogService.findBlog(id);
+        if(selectedBlog.isEmpty()) {
+            return "redirect:/blog/view/list";
+        }
+
+        User user = (User) model.getAttribute("user");
+        if (user != null) {
+            Optional<Blog> myBlog = blogService.findMyBlog(user.getId());
+            if (myBlog.isPresent()) {
+                if (myBlog.get().getId().equals(id)) {
+                    model.addAttribute("isMyBlog", true);
+                } else {
+                    model.addAttribute("isMyBlog", false);
+                }
+            } else {
+                model.addAttribute("isMyBlog", false);
+            }
+        } else {
+            model.addAttribute("isMyBlog", false);
+        }
+
+        model.addAttribute("blog", selectedBlog.get());
 
         return "blogmain_detail";
     }
 
     @GetMapping("/managing/basic")
-    public String manageBlog(Long userId,  Model model) {
-        Blog myBlog = blogService.findMyBlog(userId);
+    public String manageBlog(Model model) {
+        User user = (User)model.getAttribute("user");
 
-        model.addAttribute("myBlog", myBlog);
+        Optional<Blog> myBlog = blogService.findMyBlog(user.getId());
+        if (myBlog.isPresent()) {
+            model.addAttribute("myBlog", myBlog.get());
+        } else {
+            return "redirect:/blgo/view/list";
+        }
 
         return "blogadmin_basic";
     }

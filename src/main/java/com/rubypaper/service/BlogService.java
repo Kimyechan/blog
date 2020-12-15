@@ -5,6 +5,7 @@ import com.rubypaper.domain.user.User;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BlogService {
 
@@ -26,5 +27,7 @@ public interface BlogService {
 
     void updateBlog();
 
-    Blog findMyBlog(Long userId);
+    Optional<Blog> findMyBlog(Long userId);
+
+    Optional<Blog> findBlog(Long id);
 }

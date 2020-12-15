@@ -35,7 +35,7 @@ public class UserController {
         System.out.println("---> loginSuccess 이동");
         System.out.println("---> role " + user.getRole().toString().equals("ROLE_ADMIN"));
 
-        if(blogService.findMyBlog(user.getId()) != null) {
+        if(blogService.findMyBlog(user.getId()).isPresent()) {
             model.addAttribute("myBlogCreated", true);
         } else {
             model.addAttribute("myBlogCreated", false);
@@ -63,7 +63,7 @@ public class UserController {
         return "redirect:/blog/view/list";
     }
 
-    @PostMapping("/user")
+    @GetMapping("/user")
     public String memberMain(){
         System.out.println("---> userMain 이동");
         return "redirect:/blog/view/list";

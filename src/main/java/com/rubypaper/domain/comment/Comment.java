@@ -23,6 +23,4 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "POST_ID")
     private Post post;
-
-
 }
