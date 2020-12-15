@@ -22,8 +22,8 @@
 					<td width="70%" colspan="2">
 
 					<a th:unless="${user}"  th:href="@{/login}"><b>로그인</b></a>&nbsp;&nbsp;
-					<a th:if="${user != null && myBlog == null}" th:href="@{/blog/view/create}"><b>블로그등록</b></a>&nbsp;&nbsp;
-					<a th:if="${user != null && myBlog != null}" th:href="@{/blog/view/myBlog}"><b>내 블로그로 가기</b></a></td>
+					<a th:if="${user != null && myBlogCreated == false}" th:href="@{/blog/view/create}"><b>블로그등록</b></a>&nbsp;&nbsp;
+					<a th:if="${user != null && myBlogCreated == true}" th:href="@{/blog/view/myBlog}"><b>내 블로그로 가기</b></a></td>
 				</tr>
 			</table>
 

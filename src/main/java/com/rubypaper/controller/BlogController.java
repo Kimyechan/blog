@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/blog")
-@SessionAttributes({"user", "myBlog"})
+@SessionAttributes({"user", "myBlogCreated"})
 public class BlogController {
 
     private final BlogService blogService;
@@ -48,12 +48,11 @@ public class BlogController {
     }
 
     @PostMapping("/create")
-    public String blogCreate(@AuthenticationPrincipal(expression = "user") User user,
-                             String title, String action, Model model) {
-
+    public String blogCreate(String title, String action, Model model) {
         if (action.equals("create")){
-            model.addAttribute("user", user);
+            User user = (User)model.getAttribute("user");
             blogService.createBlog(title, user);
+            model.addAttribute("myBlogCreated", true);
         }
         return "redirect:/blog/view/list";
     }
