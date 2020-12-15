@@ -3,6 +3,7 @@ package com.rubypaper.controller;
 import com.rubypaper.domain.user.User;
 import com.rubypaper.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,19 +23,13 @@ public class UserController {
         return "login";
     }
 
-//    @PostMapping("/login")
-//    public String login(User user, Model model){
-//        model.addAttribute("user",user);
-//        return "redirect:/loginSuccess";
-//
-//    }
 
     @GetMapping("/loginSuccess")
     public String loginSuccess(User user, Model model){
         System.out.println("---> loginSuccess 이동");
 
+        model.addAttribute("user", user);
         if (user != null && user.getRole().equals("ADMIN")){
-            model.addAttribute("user", user);
             return "redirect:/admin"; // 관리자 로그인 임시
         } else if(user != null && user.getRole().equals("User")){
             return "redirect:/user"; // 회원 로그인 임시
