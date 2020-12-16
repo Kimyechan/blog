@@ -2,6 +2,8 @@ package com.rubypaper.service;
 
 import com.rubypaper.domain.post.Post;
 
+import java.util.List;
+
 public interface PostService {
 
     /**
@@ -11,7 +13,13 @@ public interface PostService {
 
     void searchPost();
 
+    List<Post> getpostList();
+
+    Post getPost(Long id);
+
     Post registerPost(Post post);
+
+    Post savePost(Post post);
 
     Post updatePost(Long id, Post post);
 
