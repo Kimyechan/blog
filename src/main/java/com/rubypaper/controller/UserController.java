@@ -12,11 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.lang.reflect.Member;
+
 @Controller
 @RequiredArgsConstructor
 @SessionAttributes({"user", "myBlogCreated"})
 public class UserController {
     private final BlogService blogService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/index")
     public String index(){
@@ -64,9 +69,34 @@ public class UserController {
     }
 
     @GetMapping("/user")
+    public String getMemberMain(@AuthenticationPrincipal(expression = "user") User user, Model model){
+        System.out.println("---> getMemberMain 이동");
+        model.addAttribute("user", user);
+        return "blogsystem_search";
+    }
+
+    @PostMapping("/user")
     public String memberMain(){
         System.out.println("---> userMain 이동");
+
         return "redirect:/blog/view/list";
+
+//        return "blogsystem_search";
+    }
+
+    @GetMapping("/join")
+    public void join(){
+        System.out.println("---> join 이동");
+    }
+
+    @PostMapping("/joinSuccess")
+    public void joinSuccess(User user, Model model){
+        System.out.println("---> joinSuccess 이동");
+        System.out.println("user : " + user.getName());
+        userService.signUp(user);
+//        model.addAttribute("user", user);
+
+
     }
 
 }
