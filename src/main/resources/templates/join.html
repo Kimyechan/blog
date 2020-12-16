@@ -4,31 +4,95 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JBlog 회원가입</title>
     <Link rel="stylesheet" href="css/theme.css">
+    <style>
+        span{
+            margin-left: 60px;
+        }
+
+        input{
+            width:215px; height: 30px;
+        }
+    </style>
+    <script>
+        function password_Check()
+        {
+            if(document.join.passwordCheck.value){
+                if(document.join.password.value != document.join.passwordCheck.value)
+                {
+                    document.getElementById('pwcheck2').innerHTML="비밀번호를 맞게 입력해주세요!";
+                    document.join.passwordCheck.focus();
+                    document.join.passwordCheck.select();
+                    return;
+                }
+                else {
+                    document.getElementById('pwcheck2').innerHTML="비밀번호 일치!";
+                    return true;
+                }
+            }
+
+        }
+
+        function inputCheck(){
+            if(!document.join.userid.value){
+                alert('아이디를 입력해주세요');
+                document.join.userid.focus();
+                return;
+            }
+            if(!document.join.password.value){
+                alert('비밀번호를 입력해주세요.');
+                document.join.password.focus();
+                return;
+            }
+            if(!document.join.passwordCheck.value){
+                alert('비밀번호 재확인칸을 입력해주세요.');
+                document.join.passwordCheck.focus();
+                return;
+            }
+            if(!document.join.name.value){
+                alert('이름을 입력해주세요.');
+                document.join.name.focus();
+                return;
+            }
+            document.join.submit();
+        }
+    </script>
 </head>
 <body>
 <center>
     <h1>회원가입</h1>
-    <form action="joinSuccess" method="post">
+    <form action="join" method="post" name="join" id="join">
         <table  bgcolor="#6495ed" width="400px" height=320 border="2" cellpadding="0"
                cellspacing="0">
             <tr>
                 <td height="30" colspan="10" align="left" class="tdcontent">
-                    <span style="margin-left: 60px"> 아이디 : <input type="text" style="width:215px; height: 30px"  name="userid" size="20">&nbsp;&nbsp;</span>
+
+                    <span> 아이디 :<input type="text"  name="userid"  size="20"></span>
+
                 </td>
             </tr>
             <tr>
                 <td  height="30" colspan="10" align="left"  class="tdcontent">
-                    <span style="margin-left: 60px"> 패스워드: <input type="password" style="width:205px; height: 30px" name="password" size="20"></span>
+
+                    <span> 비밀번호: <input type="password"  name="password"  size="20"></span>
+
+                </td>
+            </tr>
+            <tr>
+                <td  height="30" colspan="10" align="left"  class="tdcontent">
+                    <span> 비밀번호 확인: <input type="password"  name="passwordCheck" size="20" onmousemove="password_Check()"></span>
+                    <span style="color: red" id="pwcheck2"></span>
                 </td>
             </tr>
             <tr>
                 <td height="30" colspan="10" align="left" class="tdcontent">
-                    <span style="margin-left: 60px"> 이 름 : <input type="text" style="width:225px; height: 30px" name="name" size="20"> </span>
+
+                    <span> 이 름 : <input type="text"  name="name" size="20"> </span>
+
                 </td>
             </tr>
             <tr>
                 <td height="25" colspan="10" align="center">
-                    <input type="submit" value="회원가입"></td>
+                    <button name="btn" onclick="inputCheck()">가입하기</button>
             </tr>
         </table>
     </form>

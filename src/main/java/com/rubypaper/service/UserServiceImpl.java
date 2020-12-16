@@ -26,11 +26,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void signUp(User user) {
+    public boolean signUp(User user) {
         System.out.println("---> singup 진행");
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-
+        if (!(user.getUserid().length() < 5 && user.getPassword().length() < 5 && user.getName().length() < 5)) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -43,4 +47,6 @@ public class UserServiceImpl implements UserService{
     public void checkRole() {
 
     }
+
+
 }

@@ -8,7 +8,7 @@ public interface UserService {
 
     void logout();
 
-    void signUp(User user);
+    boolean signUp(User user);
 
     /**
      * 회원탈퇴
