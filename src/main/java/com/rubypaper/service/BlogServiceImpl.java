@@ -1,6 +1,7 @@
 package com.rubypaper.service;
 
 import com.rubypaper.domain.blog.Blog;
+import com.rubypaper.domain.blog.BlogStatus;
 import com.rubypaper.domain.category.Category;
 import com.rubypaper.domain.user.User;
 import com.rubypaper.repository.BlogRepository;
@@ -26,7 +27,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Page<Blog> blogListNonCondition() {
         Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "id");
-        return blogRepository.findAll(pageable);
+        return blogRepository.findAllWithUser(pageable);
     }
 
     @Override
@@ -50,6 +51,7 @@ public class BlogServiceImpl implements BlogService {
                 .user(user)
                 .fileName("j2eelogo.jpg")
                 .cntDisplayPost(10)
+                .status(BlogStatus.OPERATE)
                 .build();
 
         blogRepository.save(blog);
@@ -64,8 +66,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void deleteBlog() {
-
+    public void deleteBlog(Long deleteBlogId) {
+        blogRepository.deleteById(deleteBlogId);
     }
 
     @Override
@@ -86,5 +88,10 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void saveBlog(Blog newBlog) {
         blogRepository.save(newBlog);
+    }
+
+    @Override
+    public List<Blog> findByBlogStatus(BlogStatus blogStatus) {
+        return blogRepository.findByStatus(blogStatus);
     }
 }

@@ -1,6 +1,7 @@
 package com.rubypaper.service;
 
 import com.rubypaper.domain.blog.Blog;
+import com.rubypaper.domain.blog.BlogStatus;
 import com.rubypaper.domain.user.User;
 import org.springframework.data.domain.Page;
 
@@ -22,8 +23,8 @@ public interface BlogService {
      * 블로그 등록
      */
     void createBlog(String title, User username);
-
-    void deleteBlog();
+    
+    void deleteBlog(Long deleteBlogId);
 
     void updateBlog();
 
@@ -32,4 +33,6 @@ public interface BlogService {
     Optional<Blog> findBlog(Long id);
 
     void saveBlog(Blog newBlog);
+
+    List<Blog> findByBlogStatus(BlogStatus blogStatus);
 }

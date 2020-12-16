@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>JBlog 시스템관리</title>
+    <Link rel="stylesheet" href="/css/theme.css">
+</head>
+
+<body>
+<center>
+    <a th:href="@{/blog/view/list}">블로그 목록으로 돌아가기</a>
+    <br/>
+    <form th:action="@{/blog/delete}" method="post">
+        <table width="720" height="100" border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                <td width="50" class="tablelabel">번호</td>
+                <td width="270" class="tablelabel">블로그 제목</td>
+                <td width="100" class="tablelabel">블로거</td>
+                <td width="100" class="tablelabel">로고</td>
+                <td width="100" class="tablelabel">상태</td>
+                <td width="100" class="tablelabel">삭제</td>
+            </tr>
+            <tr th:each="blog : ${deleteList}">
+                <td class="tablecontent" align="center" th:text="${blog.id}"></td>
+                <td class="tablecontent">
+                    <a th:href="@{/blog/view/selectedBlog(id=${blog.id})}" th:text="${blog.title}"></a>
+                </td>
+                <td class="tablecontent" align="center" th:text="${blog.user.name}"></td>
+                <td class="tablecontent" align="center" ><img height="32"
+                                                              th:src="@{${'/images/logo/' + blog.fileName}}" border="0"></td>
+                <td class="tablecontent" align="center" th:text="${blog.status}"></td>
+                <td class="tablecontent" align="center"><button type="submit" name="deleteBlogId" th:value="${blog.id}">삭제</button> </td>
+            </tr>
+        </table>
+    </form>
+</center>
+</body>
+</html>

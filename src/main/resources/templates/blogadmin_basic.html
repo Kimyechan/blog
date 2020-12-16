@@ -14,10 +14,10 @@
         </tr>
         <!-- 블로그 제목과 태그 시작 -->
         <tr>
-            <td height="60" class="blogtitle">Gurum의 블로그</td>
+            <td height="60" class="blogtitle" th:text="${myBlog.title}"></td>
         </tr>
         <tr>
-            <td height="20" class="blogtag">자바, 서블릿, 스프링</td>
+            <td height="20" class="blogtag" th:text="${myBlog.tag}"></td>
         </tr>
         <!-- 블로그 제목과 태그 끝 -->
 
@@ -39,7 +39,7 @@
                 <a class="title" th:href="@{/blog/managing/basic}"><b>기본설정</b></a>&nbsp;&nbsp;
                 <a class="title" th:href="getCategoryList.do"><b>카테고리</b></a>&nbsp;&nbsp;
                 <a class="title" th:href="addPostView.do"><b>글작성</b></a>&nbsp;&nbsp;
-                <a class="title" href="javascript:popup();"><b>블로그삭제</b></a>&nbsp;&nbsp;
+                <a class="title" th:href="@{/blog/view/delete}"><b>블로그삭제</b></a>&nbsp;&nbsp;
                 <!-- 메뉴 끝 -->
             </td>
         </tr>
