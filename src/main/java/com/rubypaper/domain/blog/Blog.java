@@ -1,6 +1,7 @@
 package com.rubypaper.domain.blog;
 
 import com.rubypaper.domain.category.Category;
+import com.rubypaper.domain.post.Post;
 import com.rubypaper.domain.user.User;
 import lombok.*;
 
@@ -41,6 +42,9 @@ public class Blog {
 
     private String fileName;
 
-    @OneToMany(mappedBy = "blog")
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
+    private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
 }

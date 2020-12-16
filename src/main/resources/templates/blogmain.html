@@ -11,8 +11,8 @@
     <table background="/images/kubrickheader.jpg" width="760" height="200" border="0" cellpadding="0" cellspacing="0">
         <tr>	<td height="60">&nbsp;</td></tr>
         <!-- 블로그 제목과 태그 시작 -->
-        <tr>	<td height="60" class="blogtitle">J2EE 이야기</td></tr>
-        <tr>	<td height="20" class="blogtag">자바, J2EE, 소프트웨어 엔지니어링</td></tr>
+        <tr>	<td height="60" class="blogtitle" th:text="${blog.title}"></td></tr>
+        <tr>	<td height="20" class="blogtag" th:text="${blog.tag}"></td></tr>
         <!-- 블로그 제목과 태그 끝 -->
         <tr>	<td height="60">&nbsp;</td></tr>
     </table>
@@ -50,15 +50,14 @@
                 <!- - 로그인, 관리자 메뉴, 로고, 카테고리 시작 - ->
                 <table cellpadding="0" cellspacing="0">
                     <tr><td>
-                        <a href="#">로그인</a>&nbsp;&nbsp;<a th:href="@{/blog/managing/basic}">블로그 관리</a></td></tr>
+                        <a th:if="${user == null}" th:href="@{/login}">로그인</a>&nbsp;&nbsp;<a th:if="${user != null && isMyBlog}"th:href="@{/blog/managing/basic}">블로그 관리</a></td></tr>
                     <tr><td height="5">&nbsp;</td></tr>
-                    <tr><td><img height="80" src="/images/j2eelogo.jpg" border="0"></td></tr>
+                    <tr><td><img height="80" th:src="@{${'/images/logo/' + blog.fileName}}" border="0"></td></tr>
                     <tr><td height="5">&nbsp;</td></tr>
                     <tr><td class="categorytitle">카테고리</td></tr>
-                    <tr><td class="categoryitem"><a class="title" href="#">자바</a></td></tr>
-                    <tr><td class="categoryitem"><a class="title" href="#">J2EE</a></td></tr>
-                    <tr><td class="categoryitem"><a class="title" href="#">소프트웨어 엔지니어링</a></td></tr>
-                    <tr><td class="categoryitem"><a class="title" href="#">미분류</a></td></tr>
+                    <tr th:each="category : ${categoryList}">
+                        <td class="categoryitem"><a class="title" href="#" th:text="${category.name}"></a></td>
+                    </tr>
                     <tr><td height="5">&nbsp;</td></tr>
                     <tr><td align="center"><img width="80" src="/images/logo.jpg" border="0"></td></tr>
                 </table>

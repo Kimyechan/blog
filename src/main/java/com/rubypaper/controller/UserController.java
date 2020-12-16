@@ -72,7 +72,7 @@ public class UserController {
     public String getMemberMain(@AuthenticationPrincipal(expression = "user") User user, Model model){
         System.out.println("---> getMemberMain 이동");
         model.addAttribute("user", user);
-        return "blogsystem_search";
+        return "redirect:/blog/view/list";
     }
 
     @PostMapping("/user")
@@ -95,8 +95,6 @@ public class UserController {
         System.out.println("user : " + user.getName());
         userService.signUp(user);
 //        model.addAttribute("user", user);
-
-
     }
 
 }

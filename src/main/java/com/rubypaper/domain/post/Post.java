@@ -1,5 +1,6 @@
 package com.rubypaper.domain.post;
 
+import com.rubypaper.domain.blog.Blog;
 import com.rubypaper.domain.category.Category;
 import com.rubypaper.domain.comment.Comment;
 import com.sun.istack.NotNull;
@@ -40,6 +41,10 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID")
     private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BLOG_ID")
+    private Blog blog;
 
     @Builder
     public Post(Long id, Long postNum, String title, String content, List<Comment> comments, LocalDateTime regDate) {

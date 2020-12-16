@@ -67,12 +67,14 @@ public class BlogController {
 
         if(blog.isPresent()) {
             model.addAttribute("blog", blog.get());
+            model.addAttribute("postList", blog.get().getPostList());
+            model.addAttribute("categoryList", blog.get().getCategories());
             model.addAttribute("isMyBlog", true);
         } else {
             return "redirect:/blog/view/list";
         }
 
-        return "blogmain_detail";
+        return "blogmain";
     }
 
     @GetMapping("/view/selectedBlog")
@@ -101,7 +103,7 @@ public class BlogController {
         model.addAttribute("blog", selectedBlog.get());
         model.addAttribute("categoryList", selectedBlog.get().getCategories());
 
-        return "blogmain_detail";
+        return "blogmain";
     }
 
     @GetMapping("/managing/basic")
