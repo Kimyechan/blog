@@ -30,4 +30,6 @@ public interface BlogService {
     Optional<Blog> findMyBlog(Long userId);
 
     Optional<Blog> findBlog(Long id);
+
+    void saveBlog(Blog newBlog);
 }

@@ -25,7 +25,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Page<Blog> blogListNonCondition() {
-        Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "cnt");
+        Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "id");
         return blogRepository.findAll(pageable);
     }
 
@@ -48,8 +48,8 @@ public class BlogServiceImpl implements BlogService {
                 .title(title)
                 .tag("java")
                 .user(user)
-                .fileName("logo.jpg")
-                .cnt(0)
+                .fileName("j2eelogo.jpg")
+                .cntDisplayPost(10)
                 .build();
 
         blogRepository.save(blog);
@@ -81,5 +81,10 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Optional<Blog> findBlog(Long id) {
         return blogRepository.findById(id);
+    }
+
+    @Override
+    public void saveBlog(Blog newBlog) {
+        blogRepository.save(newBlog);
     }
 }

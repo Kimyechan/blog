@@ -34,7 +34,7 @@ public class Blog {
 
     private String tag;
 
-    private Integer cnt;
+    private Integer cntDisplayPost;
 
     @Enumerated(EnumType.STRING)
     private BlogStatus status;

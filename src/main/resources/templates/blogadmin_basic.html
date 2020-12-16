@@ -50,29 +50,30 @@
             <td height="10">&nbsp;</td>
             <td>
                 <!-- 작업 화면  시작 -->
-                <form action="updateBlog.do" method="post">
+                <form th:action="@{/blog/update}" method="post" enctype="multipart/form-data">
                     <table width="720" border="0" cellpadding="0" cellspacing="0">
+                        <input type="hidden" name="id" th:value="${myBlog.id}"/>
                         <tr>
                             <td width="150" class="inputlabel">블로그 제목 :</td>
-                            <td><input class="inputtext" type="text" size="40" name="title"></td>
+                            <td><input class="inputtext" type="text" size="40" name="title" th:value="${myBlog.title}"></td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">블로그 태그 :</td>
-                            <td><input class="inputtext" type="text" size="50" name="tag"></td>
+                            <td><input class="inputtext" type="text" size="50" name="tag" th:value="${myBlog.tag}"></td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">메인페이지 포스트 수 :</td>
-                            <td><input class="inputtext" type="text" size="4" name="cntDisplayPost"></td>
+                            <td><input class="inputtext" type="text" size="4" name="cntDisplayPost" th:value="${myBlog.cntDisplayPost}"></td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">로고이미지 :</td>
-                            <td>&nbsp;<img height="80" src="/images/j2eelogo.jpg" border="0"></td>
+                            <td>&nbsp;<img height="80" th:src="@{${'/images/logo/' + myBlog.fileName}}" border="0"></td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">&nbsp;</td>
                             <td>
-                                <input class="inputtext" type="text" size="40" name="logoFile">
-                                <input type="submit" value="찾아보기"></td>
+                                <input class="inputtext" type="file" size="40" name="file" value="이미지 파일 찾기" >
+                            </td>
                         </tr>
                         <tr>
                             <td height="40" colspan="10" align="center">

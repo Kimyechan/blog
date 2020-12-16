@@ -5,12 +5,17 @@ import com.rubypaper.domain.user.User;
 import com.rubypaper.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.dom4j.rule.Mode;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,6 +99,7 @@ public class BlogController {
         }
 
         model.addAttribute("blog", selectedBlog.get());
+        model.addAttribute("categoryList", selectedBlog.get().getCategories());
 
         return "blogmain_detail";
     }
@@ -101,16 +107,48 @@ public class BlogController {
     @GetMapping("/managing/basic")
     public String manageBlog(Model model) {
         User user = (User)model.getAttribute("user");
-
+        if(user == null) {
+            return "redirect:/blog/view/list";
+        }
         Optional<Blog> myBlog = blogService.findMyBlog(user.getId());
         if (myBlog.isPresent()) {
             model.addAttribute("myBlog", myBlog.get());
         } else {
-            return "redirect:/blgo/view/list";
+            return "redirect:/blog/view/list";
         }
 
         return "blogadmin_basic";
     }
+
+    @PostMapping("/update")
+    public String update(MultipartFile file, Blog blog) throws IOException {
+        Optional<Blog> olderBlog = blogService.findBlog(blog.getId());
+        if (olderBlog.isEmpty()) {
+            return "redirect:/blog/view/list";
+        }
+
+        if (file.isEmpty()) {
+            return "redirect:/blog/managing/basic";
+        }
+
+        File temp = new File("");
+
+        String saveDirectory = temp.getAbsolutePath() + "/src/main/resources/static/images/logo/";
+        String fileName = file.getOriginalFilename();//getting file name
+        System.out.println("directory with file name: " + saveDirectory+fileName);
+        file.transferTo(new File(saveDirectory + fileName));
+
+        Blog newBlog = olderBlog.get();
+        newBlog.setTitle(blog.getTitle());
+        newBlog.setTag(blog.getTag());
+        newBlog.setCntDisplayPost(blog.getCntDisplayPost());
+        newBlog.setFileName(fileName);
+
+        blogService.saveBlog(newBlog);
+
+        return "redirect:/blog/managing/basic";
+    }
+
     @GetMapping("/blogadmin_basic")
     public String blogadmin_basic() {
         return "blogadmin_basic";
