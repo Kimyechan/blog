@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,7 +74,12 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog findMyBlog(Long userId) {
+    public Optional<Blog> findMyBlog(Long userId) {
         return blogRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Optional<Blog> findBlog(Long id) {
+        return blogRepository.findById(id);
     }
 }

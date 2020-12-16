@@ -40,7 +40,7 @@ public class UserController {
         System.out.println("---> loginSuccess 이동");
         System.out.println("---> role " + user.getRole().toString().equals("ROLE_ADMIN"));
 
-        if(blogService.findMyBlog(user.getId()) != null) {
+        if(blogService.findMyBlog(user.getId()).isPresent()) {
             model.addAttribute("myBlogCreated", true);
         } else {
             model.addAttribute("myBlogCreated", false);
