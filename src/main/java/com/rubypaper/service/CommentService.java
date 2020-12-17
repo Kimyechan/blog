@@ -1,16 +1,20 @@
 package com.rubypaper.service;
 
 import com.rubypaper.domain.comment.Comment;
+import com.rubypaper.domain.post.Post;
+import com.rubypaper.domain.user.User;
 
 import java.util.List;
 
 public interface CommentService {
+    Comment saveComment (String content, Post post, User user);
 
-    List<Comment> searchComment(long id);
+    List<Comment> getCommentList();
 
-    Comment registerComment(Comment comment);
+    Comment readComm(Long id);
 
-    List<Comment> updateComment(Comment comment,long commentId,long postId);
+    void deleteComment(Long commentId);
 
-    void deleteComment(Long id);
+    // List<Comment> searchComment(long id);
+
 }

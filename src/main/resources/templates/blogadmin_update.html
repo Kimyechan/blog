@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JBlog 글 작성</title>
+<title>JBlog 글 수정</title>
 <Link rel="stylesheet" href="/css/theme.css">
 </head>
 
@@ -50,12 +50,13 @@
 			<tr>
 				<td height="10">&nbsp;</td>
 				<td>
-					<form action="/post/addPost.do" method="post">
+					<form th:action="'/post/update/' + ${post.id} "   method="post">
 						<table width="720" border="0" cellpadding="0" cellspacing="0">
 							<tr>
 								<td width="50" class="inputlabel"></td>
 								<td width="390" >
-									<input class="inputtext" type="text" size="60" name="title">
+									<input type="hidden" name="id" th:value="${post.id}"/>
+									<input th:value="${post.title}" class="inputtext" type="text" size="60" name="title">
 								</td>
 								<td width="300">
 									<select class="inputtextarea">
@@ -68,14 +69,14 @@
 							<tr>
 								<td width="50" class="inputlabel"></td>
 								<td colspan="10">
-									<textarea name="content" class="inputtextarea" rows="10" cols="100"></textarea>
+									<textarea th:text="${post.content}" name="content" class="inputtextarea" rows="10" cols="100"></textarea>
 								</td>
 							</tr>
 							<tr>
 								<td height="5">&nbsp;</td>
 							</tr>
 							<tr>
-								<td colspan="10" align="center">&nbsp;<input type="submit" value="확인"></td>
+								<td colspan="10" align="center">&nbsp;<input type="submit" value="수정"></td>
 							</tr>
 						</table>
 					</form> 
