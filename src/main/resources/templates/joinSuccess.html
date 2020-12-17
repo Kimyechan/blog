@@ -5,7 +5,9 @@
 </head>
 <body>
 	<h1>
-		<font color="red">환영합니다 회원가입 되셨습니다.^^</font>
+		<th:block th:if="${join != null}">
+		<font color="orange">환영합니다 <span th:text="${join.getName()}">회원명</span>님 회원가입 되셨습니다.^^</font>
+		</th:block>
 	</h1>
 	<h3>로그인 페이지로 이동해서 로그인 해주세요</h3>
 	<h5>

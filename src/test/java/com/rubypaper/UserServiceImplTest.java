@@ -27,16 +27,16 @@ class UserServiceImplTest {
     @Test
     void signUp() {
 
-//        User user = new User();
-//        user.setUserid("manager");
-//        user.setPassword(passwordEncoder.encode("manager123")));
-//        user.setName("또치");
+        User user = new User();
+        user.setUserid("");
+        user.setPassword("");
+        user.setName("");
 
 //        userRepository.save(user);
 
-        User userTest = userRepository.findByUserid("manager").get();
-        userTest.setPassword(passwordEncoder.encode("manager123"));
-        userService.signUp(userTest);
+//        User userTest = userRepository.findByUserid("manager").get();
+//        userTest.setPassword(passwordEncoder.encode("manager123"));
+        userService.signUp(user);
 // {bcrypt}$2a$10$erMry.HU.KyzVs7ku7Cfk.6bNxpOqJh8e18nFcxJIrgRXRAV8EsOe
 // {bcrypt}$2a$10$7k9ybLrMJOmVPsD6efXsRO6iO0yvjgGMSJ5bO1neXKEL/iUd9V7lG
     }
