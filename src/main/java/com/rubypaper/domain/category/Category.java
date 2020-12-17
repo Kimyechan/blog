@@ -1,10 +1,13 @@
 package com.rubypaper.domain.category;
 
 import com.rubypaper.domain.blog.Blog;
+import com.rubypaper.domain.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,7 +35,12 @@ public class Category {
 
     private Integer cnt;
 
+    private String description;
+
     private LocalDate createDate;
 
     private LocalDate modifiedDate;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Post> postList = new ArrayList<>();
 }

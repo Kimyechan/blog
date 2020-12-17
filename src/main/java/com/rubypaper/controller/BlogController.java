@@ -195,25 +195,4 @@ public class BlogController {
         blogService.deleteBlog(deleteBlogId);
         return "redirect:/blog/view/deleteList";
     }
-
-    @GetMapping("/blogadmin_basic")
-    public String blogadmin_basic() {
-        return "blogadmin_basic";
-    }
-
-    @GetMapping("/blogadmin_category")
-    public String blogadmin_category() {
-        return "blogadmin_category";
-    }
-
-    @GetMapping("/blogadmin_request_remove")
-    public String blogadmin_request_remove() {
-        return "blogadmin_request_remove";
-    }
-
-    @GetMapping("/blogadmin_write")
-    public String blogadmin_write() {
-        return "blogadmin_write";
-    }
-
 }
