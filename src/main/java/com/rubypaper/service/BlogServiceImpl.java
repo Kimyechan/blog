@@ -37,7 +37,7 @@ public class BlogServiceImpl implements BlogService {
         } else if (searchCondition.equals("blogger")) {
             return blogRepository.findByUsername(searchKeyword);
         } else if (searchCondition.equals("tag")){
-            return blogRepository.findByTag(searchKeyword);
+            return blogRepository.findByTagContaining(searchKeyword);
         } else {
             return null;
         }

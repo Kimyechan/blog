@@ -21,7 +21,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
     @Query("select b from Blog b join fetch b.user where b.user.name = :searchKeyword")
     List<Blog> findByUsername(String searchKeyword);
 
-    List<Blog> findByTag(String searchKeyword);
+    List<Blog> findByTagContaining(String searchKeyword);
 
     @Query("select b from Blog b where b.user.id = :userId")
     Optional<Blog> findByUserId(Long userId);

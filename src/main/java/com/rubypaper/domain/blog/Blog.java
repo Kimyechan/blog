@@ -7,6 +7,9 @@ import lombok.*;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +39,9 @@ public class Blog {
 
     private String tag;
 
+    @NotNull
+    @Min(1)
+    @Max(20)
     private Integer cntDisplayPost;
 
     @Enumerated(EnumType.STRING)

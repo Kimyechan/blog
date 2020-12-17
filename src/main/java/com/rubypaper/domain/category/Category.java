@@ -5,6 +5,8 @@ import com.rubypaper.domain.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,8 @@ public class Category {
 
     private String displayType;
 
+    @Min(1)
+    @Max(20)
     private Integer cnt;
 
     private String description;
