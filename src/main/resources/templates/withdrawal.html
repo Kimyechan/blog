@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>JBlog 회원탈퇴</title>
+    <Link rel="stylesheet" href="css/theme.css">
+    <style>
+        span {
+            margin-left:60px;
+        }
+
+        input {
+            width: 180px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+<center>
+    <h1>회원 탈퇴</h1>
+        <table bgcolor="#f0ffff" width="400px" height=320 border="2" cellpadding="0"
+               cellspacing="0">
+            <tr border="none">
+                <td height="30" colspan="10" align="left" class="tdcontent">
+                    <th:block th:if="${withdrawal != null}">
+                        <span style="font-weight:bold; font-size: 1.4em"  th:text="${withdrawal.getName()}">도우너</span>님 정말 회원 탈퇴하시겠습니까?
+                    </th:block>
+                </td>
+            </tr>
+            <tr border="none">
+                <td  height="25" align="center">
+                    <div><a th:href="@{/withdrawalDo}"><b>회원 탈퇴</b></a></div>
+                </td>
+                <td height="25" align="center">
+                    <div><a th:href="@{/index}"><b>취소 하기</b></a></div>
+                </td>
+            </tr>
+        </table>
+</center>
+</body>
+</html>

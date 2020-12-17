@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -26,20 +28,36 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean signUp(User user) {
+    public String signUp(User user) {
         System.out.println("---> singup 진행");
-        if (user.getUserid().length() > 5 && user.getPassword().length() > 5 && user.getName().length() > 2) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
-            return true;
+        if (user.getUserid().length() < 5 && (user.getPassword().length() > 4 && user.getName().length() > 1)){
+            return "id";
+        } else if(user.getPassword().length() < 5 && (user.getUserid().length() > 4 && user.getName().length() > 1)) {
+            return "password";
+        } else if (user.getName().length() < 2 && (user.getUserid().length() > 4 && user.getPassword().length() > 4)){
+            return "name";
+        }
+
+        Optional<User> findUser = userRepository.findByUserid(user.getUserid());
+
+      if (!findUser.isPresent()){
+          user.setPassword(passwordEncoder.encode(user.getPassword()));
+          userRepository.save(user);
+            return "save";
+        } else if (user.getUserid() != null && findUser.isPresent()) {
+            if (user.getUserid().equals(findUser.get().getUserid())){
+                return "duplicated";
+            } else {
+                return "success";
+            }
         } else {
-            return false;
+            return "success";
         }
     }
 
     @Override
-    public void deleteUser(User user) {
-        System.out.println("---> deleteUser 진행");
+    public void withdrawal(User user) {
+        System.out.println("---> withdrawal 진행");
         userRepository.deleteById(user.getId());
     }
 
@@ -49,12 +67,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String idCheck(String userid) {
-        if (userRepository.findUserByUserid(userid).isEmpty()){
-            return "YES";
-        } else {
-            return "NO";
-        }
+    public void updateUser(User user) {
+       User findUser = userRepository.findById(user.getId()).get();
+        findUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        findUser.setName(user.getName());
+        userRepository.save(findUser);
+
     }
 
 }

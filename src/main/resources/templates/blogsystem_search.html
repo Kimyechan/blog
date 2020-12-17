@@ -22,9 +22,11 @@
                 <td width="70%" colspan="2">
                     <a th:unless="${user}" th:href="@{/join}"><b>회원가입</b></a>&nbsp;&nbsp;
                     <a th:unless="${user}" th:href="@{/login}"><b>로그인</b></a>&nbsp;&nbsp;
+                    <span style="color: royalblue; " th:if="${user != null}">환영합니다. <span style="font-weight: bold" th:text="${user.getName()}"></span>님</span>&nbsp;&nbsp;
                     <a th:if="${user != null && myBlogCreated == false}" th:href="@{/blog/view/create}"><b>블로그등록</b></a>&nbsp;&nbsp;
                     <a th:if="${user != null && myBlogCreated == true}" th:href="@{/blog/view/myBlog}"><b>내 블로그로 가기</b></a>
-                    <a th:if="${user != null}" th:href="@{/logout}"><b>로그아웃</b></a>
+                    <a th:if="${user != null}" th:href="@{/logout}"><b>로그아웃</b></a>&nbsp;&nbsp;
+                    <a th:if="${user != null}" th:href="@{/mypage}"><b>마이페이지</b></a>
                     <a th:if="${user != null && user.getRole().name().equals('ROLE_ADMIN')}" th:href="@{/blog/view/deleteList}"><b>블로그 등록 관리</b></a>
 
                 </td>
