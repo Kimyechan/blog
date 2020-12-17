@@ -22,15 +22,22 @@
 					패스워드 : <input type="password" name="password" size="15">
 				</td>
 			</tr>
+
 			<tr>
-				<td height="40" colspan="10" align="center"><input
+				<td height="20" colspan="10" align="center"><input
 					type="submit" value="로그인"></td>
 			</tr>
 			<tr>
-				<td colspan="10">&nbsp;</td>
+				<td height="30" colspan="10" align="center">
+					<div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
+						<span style="color: red">잘못된 아이디이거나 비밀번호 입니다.</span>
+					</div>
+				</td>
 			</tr>
 		</table>
 	</form>
 
+
+<!-- th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" -->
 </body>
 </html>
