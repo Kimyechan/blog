@@ -14,17 +14,17 @@
         </tr>
         <!-- 블로그 제목과 태그 시작 -->
         <tr>
-            <td height="60" class="blogtitle" th:text="${myBlog.title}"></td>
+            <td height="60" class="blogtitle" th:text="${blog.title}"></td>
         </tr>
         <tr>
-            <td height="20" class="blogtag" th:text="${myBlog.tag}"></td>
+            <td height="20" class="blogtag" th:text="${blog.tag}"></td>
         </tr>
         <!-- 블로그 제목과 태그 끝 -->
 
         <tr>
             <td align="right" height="60">
                 <a href="logout.do">로그아웃</a>&nbsp;&nbsp;
-                <a href="blogMain.do">내 블로그 메인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a th:href="@{/blog/view/myBlog}">내 블로그 메인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </td>
         </tr>
     </table>
@@ -50,24 +50,25 @@
             <td height="10">&nbsp;</td>
             <td>
                 <!-- 작업 화면  시작 -->
-                <form th:action="@{/blog/update}" method="post" enctype="multipart/form-data">
+                <form th:action="@{/blog/update}" method="post" enctype="multipart/form-data" th:object="${blog}">
                     <table width="720" border="0" cellpadding="0" cellspacing="0">
-                        <input type="hidden" name="id" th:value="${myBlog.id}"/>
+                        <input type="hidden" name="id" th:value="${blog.id}"/>
                         <tr>
                             <td width="150" class="inputlabel">블로그 제목 :</td>
-                            <td><input class="inputtext" type="text" size="40" name="title" th:value="${myBlog.title}"></td>
+                            <td><input class="inputtext" type="text" size="40" name="title" th:field="*{title}" th:value="${blog.title}"></td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">블로그 태그 :</td>
-                            <td><input class="inputtext" type="text" size="50" name="tag" th:value="${myBlog.tag}"></td>
+                            <td><input class="inputtext" type="text" size="50" name="tag" th:field="*{tag}" th:value="${blog.tag}"></td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">메인페이지 포스트 수 :</td>
-                            <td><input class="inputtext" type="text" size="4" name="cntDisplayPost" th:value="${myBlog.cntDisplayPost}"></td>
+                            <td><input class="inputtext" type="text" size="4" name="cntDisplayPost"  th:field="*{cntDisplayPost}" th:value="${blog.cntDisplayPost}">개(1~20)</td>
+                            <td th:if="${#fields.hasErrors('cntDisplayPost')}" th:errors="*{cntDisplayPost}"></td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">로고이미지 :</td>
-                            <td>&nbsp;<img height="80" th:src="@{${'/images/logo/' + myBlog.fileName}}" border="0"></td>
+                            <td>&nbsp;<img height="80" th:src="@{${'/images/logo/' + blog.fileName}}" border="0"></td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">&nbsp;</td>

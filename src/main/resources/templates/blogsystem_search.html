@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <td width="100%" height="120" colspan="10" align="center">
-                    <img src="/images/logo.jpg" border="0"></td>
+                    <a th:href="@{/blog/view/list}"><img src="/images/logo.jpg" border="0"></a></td>
             </tr>
             <tr>
                 <td width="30%" height="30">&nbsp;</td>
@@ -24,7 +24,9 @@
                     <a th:unless="${user}" th:href="@{/login}"><b>로그인</b></a>&nbsp;&nbsp;
                     <a th:if="${user != null && myBlogCreated == false}" th:href="@{/blog/view/create}"><b>블로그등록</b></a>&nbsp;&nbsp;
                     <a th:if="${user != null && myBlogCreated == true}" th:href="@{/blog/view/myBlog}"><b>내 블로그로 가기</b></a>
+                    <a th:if="${user != null}" th:href="@{/logout}"><b>로그아웃</b></a>
                     <a th:if="${user != null && user.getRole().name().equals('ROLE_ADMIN')}" th:href="@{/blog/view/deleteList}"><b>블로그 등록 관리</b></a>
+
                 </td>
             </tr>
         </table>
@@ -42,7 +44,7 @@
                 <td height="20" colspan="10" align="center" class="tdcontent">
                     <input type="radio" name="searchCondition" value="title" checked>블로그 제목&nbsp;&nbsp;
                     <input type="radio" name="searchCondition" value="blogger">블로거&nbsp;&nbsp;
-                    <input type="radio" name="searchCondition" value="tag">상태
+                    <input type="radio" name="searchCondition" value="tag">태그
                 </td>
             </tr>
             <tr>

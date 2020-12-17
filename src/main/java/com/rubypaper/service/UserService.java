@@ -8,7 +8,7 @@ public interface UserService {
 
     void logout();
 
-    void signUp(User user);
+    boolean signUp(User user);
 
     /**
      * 회원탈퇴
@@ -18,4 +18,6 @@ public interface UserService {
      * 관리자 사용자 구분
      */
     void checkRole();
+
+    String idCheck(String id);
 }
