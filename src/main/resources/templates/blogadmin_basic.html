@@ -23,7 +23,7 @@
 
         <tr>
             <td align="right" height="60">
-                <a href="logout.do">로그아웃</a>&nbsp;&nbsp;
+                <a th:if="${user != null}" th:href="@{/logout}">로그아웃</a>&nbsp;&nbsp;
                 <a th:href="@{/blog/view/myBlog}">내 블로그 메인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </td>
         </tr>
