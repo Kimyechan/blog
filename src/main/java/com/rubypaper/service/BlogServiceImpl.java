@@ -37,7 +37,7 @@ public class BlogServiceImpl implements BlogService {
         } else if (searchCondition.equals("blogger")) {
             return blogRepository.findByUsername(searchKeyword);
         } else if (searchCondition.equals("tag")){
-            return blogRepository.findByTag(searchKeyword);
+            return blogRepository.findByTagContaining(searchKeyword);
         } else {
             return null;
         }
@@ -50,7 +50,7 @@ public class BlogServiceImpl implements BlogService {
                 .tag("java")
                 .user(user)
                 .fileName("j2eelogo.jpg")
-                .cntDisplayPost(0)
+                .cntDisplayPost(1)
                 .status(BlogStatus.OPERATE)
                 .build();
 

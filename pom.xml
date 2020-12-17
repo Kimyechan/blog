@@ -75,13 +75,15 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>jquery</artifactId>
             <version>3.3.1</version>
         </dependency>
-
     </dependencies>
 
     <build>

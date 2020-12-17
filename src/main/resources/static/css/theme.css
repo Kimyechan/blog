@@ -1,16 +1,16 @@
 /* Hyperlink Style */
-A:link 				{ font-size:9pt; font-family:"±¼¸²Ã¼"; }
-A:visited 			{ font-size:9pt; font-family:"±¼¸²Ã¼"; }
-A:active 			{ font-size:9pt; font-family:"±¼¸²Ã¼"; }
-A:hover 				{ font-size:9pt; font-family:"±¼¸²Ã¼"; } 
+A:link 				{ font-size:9pt; font-family:"ï¿½ï¿½ï¿½ï¿½Ã¼"; }
+A:visited 			{ font-size:9pt; font-family:"ï¿½ï¿½ï¿½ï¿½Ã¼"; }
+A:active 			{ font-size:9pt; font-family:"ï¿½ï¿½ï¿½ï¿½Ã¼"; }
+/* A:hover 				{ font-size:9pt; font-family:"ï¿½ï¿½ï¿½ï¿½Ã¼"; } */
 
-A.title:link 			{ font-size:9pt; font-family:"±¼¸²Ã¼"; color:#696969; text-decoration:none; font-weight:bold; }
-A.title:visited 		{ font-size:9pt; font-family:"±¼¸²Ã¼"; color:#696969F; text-decoration:none; font-weight:bold; }
-A.title:active 		{ font-size:9pt; font-family:"±¼¸²Ã¼"; color:#696969; text-decoration:none; font-weight:bold; }
-A.title:hover 		{ font-size:9pt; font-family:"±¼¸²Ã¼"; color:dc143c; text-decoration:none; font-weight:bold; }
+A.title:link 			{ font-size:9pt; font-family:"ï¿½ï¿½ï¿½ï¿½Ã¼"; color:#696969; text-decoration:none; font-weight:bold; }
+A.title:visited 		{ font-size:9pt; font-family:"ï¿½ï¿½ï¿½ï¿½Ã¼"; color:#696969F; text-decoration:none; font-weight:bold; }
+A.title:active 		{ font-size:9pt; font-family:"ï¿½ï¿½ï¿½ï¿½Ã¼"; color:#696969; text-decoration:none; font-weight:bold; }
+A.title:hover 		{ font-size:9pt; font-family:"ï¿½ï¿½ï¿½ï¿½Ã¼"; color:dc143c; text-decoration:none; font-weight:bold; }
 
-.td							{ background-color:#FFFFFF; font-size:9pt; font-family:"±¼¸²Ã¼"}
-.tdcontent				{ font-size:9pt; font-family:"±¼¸²Ã¼"; height:10px;}
+.td							{ background-color:#FFFFFF; font-size:9pt; font-family:"ï¿½ï¿½ï¿½ï¿½Ã¼"}
+.tdcontent				{ font-size:9pt; font-family:"ï¿½ï¿½ï¿½ï¿½Ã¼"; height:10px;}
 .tdcontentcenter	{ background-color:#FFFFFF; font-size:9pt; font-family:"Tahoma"; height:10px;text-align:center; }
 .tdcontentright		{ background-color:#FFFFFF; font-size:9pt; font-family:"Tahoma"; height:10px;text-align:right; }
 
@@ -33,4 +33,16 @@ A.title:hover 		{ font-size:9pt; font-family:"±¼¸²Ã¼"; color:dc143c; text-decora
 .inputtextarea   { font-size:9pt;margin-left:5px; }
 
 .tablelabel		{ font-size:9pt;font-weight: bold;height:24px;text-align:center; }
-.tablecontent	{ font-size:9pt; font-family:"±¼¸²Ã¼"; height:20px;}
+.tablecontent	{ font-size:9pt; font-family:"ï¿½ï¿½ï¿½ï¿½Ã¼"; height:20px;}
+
+.postAddDel {
+	font-size: 10px;
+	margin-left: -81px;
+	color: blue;
+}
+
+.postSapn {
+	border-right: 1px solid #cccccc;
+	margin: 3px;
+	padding: 3px;
+}

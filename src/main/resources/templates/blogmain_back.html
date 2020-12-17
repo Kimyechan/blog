@@ -18,21 +18,15 @@
     </table>
 
     <table background="/images/kubrickbg.jpg" width="760" height="300" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td height="10" colspan="10">&nbsp;</td>
-        </tr>
-        <tr>
-            <td height="5">&nbsp;</td>
-        </tr>
+        <tr><td height="10">&nbsp;</td></tr>
         <tr>
             <td width="20">&nbsp;</td>
             <td width="530" valign="top" >
                 <!-- CONTENT  !-->
                 <table height="10" border="0" cellpadding="0" cellspacing="0" th:each="post : ${postList}">
-                    <tr><span th:hidden="${post.id}"></span></tr>
+                    <tr><span th:hidden="${post.postNum}"></span></tr>
                     <tr><td class="posttitle">
-                        <a class="posttitle" href="blogmain_detail.html" th:href="'/post/'+${post.id}" >
-                                <!-- "@{/post/{postNum}(postNum=${post.postNum})}"> -->
+                        <a class="posttitle" href="blogmain_detail.html" th:href="@{/post/{postNum}(postNum=${post.postNum})}">
                             <span th:text="${post.title}"> </span>
                         </a>
                     </td></tr>
@@ -44,7 +38,7 @@
                         </span>
                     </td></tr>
                     <tr><td height="5">&nbsp;</td></tr>
-                    <tr><td class="postwriter">posted by <span th:text="${user.name}"></span> in J2EE, 덧글 0</td></tr>
+                    <tr><td class="postwriter">posted by <span th:text="${post.id}"></span> in J2EE, 덧글 0</td></tr>
                     <tr><td height="5">&nbsp;</td></tr>
                     <tr><td height="5">&nbsp;</td></tr>
                     <!-- TBD Post line... -->
@@ -53,8 +47,8 @@
             </td>
             <td width="20">&nbsp;</td>
             <td width="190" valign="top">
-                <!-- 로그인, 관리자 메뉴, 로고, 카테고리 시작 -->
-                <table cellpadding="0" cellspacing="0" >
+                <!- - 로그인, 관리자 메뉴, 로고, 카테고리 시작 - ->
+                <table cellpadding="0" cellspacing="0">
                     <tr><td>
                         <a th:if="${user == null}" th:href="@{/login}">로그인</a>&nbsp;&nbsp;<a th:if="${user != null && isMyBlog}"th:href="@{/blog/managing/basic}">블로그 관리</a></td></tr>
                     <tr><td height="5">&nbsp;</td></tr>
@@ -65,7 +59,7 @@
                         <td class="categoryitem"><a class="title" href="#" th:text="${category.name}"></a></td>
                     </tr>
                     <tr><td height="5">&nbsp;</td></tr>
-                    <tr><td align="center"><a th:href="@{/blog/view/list}"><img width="80" src="/images/logo.jpg" border="0"></a></td></tr>
+                    <tr><td align="center"><img width="80" src="/images/logo.jpg" border="0"></td></tr>
                 </table>
                 <!-- 로그인, 관리자 메뉴, 로고, 카테고리 끝 -->
             </td>

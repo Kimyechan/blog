@@ -22,8 +22,8 @@
         </tr>
         <!-- 블로그 제목과 태그 끝 -->
         <tr>
-            <td align="right" height="60"><a href="logout.do">로그아웃</a>&nbsp;&nbsp;
-                <a href="blogMain.do">내 블로그 메인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <td align="right" height="60"><a th:if="${user != null}" th:href="@{/logout}">로그아웃</a>&nbsp;&nbsp;
+                <a th:href="@{/blog/view/myBlog}">내 블로그 메인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </td>
         </tr>
     </table>
@@ -38,7 +38,7 @@
                 <!-- 메뉴 시작 -->
                 <a class="title" th:href="@{/blog/managing/basic}"><b>기본설정</b></a>&nbsp;&nbsp;
                 <a class="title" th:href="@{/category/view/managing}"><b>카테고리</b></a>&nbsp;&nbsp;
-                <a class="title" th:href="addPostView.do"><b>글작성</b></a>&nbsp;&nbsp;
+                <a class="title" th:href="@{/post/newPost}"><b>글작성</b></a>&nbsp;&nbsp;
                 <a class="title" th:href="@{/blog/view/delete}"><b>블로그삭제</b></a>&nbsp;&nbsp;
                 <!-- 메뉴 끝 -->
             </td>
@@ -59,7 +59,7 @@
                         <td width="70" class="tablelabel">삭제</td>
                     </tr>
                     <tr th:each="category : ${categoryList}">
-                        <td class="tablecontent"><a th:href="@{/category/view/managing(categoryId=${category.id})}" th:text="${category.name}"></a></td>
+                        <td class="tablecontent"><a th:href="@{/category/view/managing(categoryId=${category.id}, actionType='update')}" th:text="${category.name}"></a></td>
                         <td class="tablecontent" align="center" th:text="${category.displayType}"></td>
                         <td class="tablecontent" align="center" th:text="${category.cnt}"></td>
                         <td class="tablecontent" th:text="${category.description}"></td>
@@ -69,7 +69,7 @@
                     </tr>
                 </table>
 
-                <form th:if="${selectedCategory != null}" th:action="@{/category/update}" method="post" enctype="multipart/form-data">
+                <form th:if="${category != null && actionType.equals('update')}" th:action="@{/category/update}"  th:object="${category}" method="post">
                     <table width="720" border="0" cellpadding="0" cellspacing="0">
                         <tr>
                             <td height="5">&nbsp;</td>
@@ -83,27 +83,28 @@
                         <tr>
                             <td height="5">&nbsp;</td>
                         </tr>
-                        <input type="hidden" name="id" th:value="${selectedCategory.id}">
+                        <input type="hidden" name="id" th:field="*{id}" th:value="${category.id}">
                         <tr>
                             <td width="150" class="inputlabel">카테고리명 :</td>
-                            <td><input class="inputtext" type="text" size="40" name="name" th:value="${selectedCategory.name}"/></td>
+                            <td><input class="inputtext" type="text" size="40" name="name" th:field="*{name}" th:value="${category.name}"/></td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">보이기 유형 :</td>
                             <td class="tdcontent">
-                                <input type="radio" name="displayType" value="타이틀" checked>타이틀&nbsp;&nbsp;
-                                <input type="radio" name="displayType" value="텍스트">텍스트&nbsp;&nbsp;
+                                <input type="radio" name="displayType" th:field="*{displayType}" value="타이틀" checked>타이틀&nbsp;&nbsp;
+                                <input type="radio" name="displayType" th:field="*{displayType}" value="텍스트">텍스트&nbsp;&nbsp;
                             </td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">포스트 수 :</td>
                             <td class="tdcontent">
-                                <input class="inputtext" type="text" size="4" name="cnt" th:value="${selectedCategory.cnt}">개(1~20)
+                                <input class="inputtext" type="text" size="4" name="cnt" th:field="*{cnt}" th:value="${category.cnt}">개(1~20)
                             </td>
+                            <td th:if="${errorMessage}" th:text="${errorMessage}"></td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">설명 :</td>
-                            <td><input type="text" class="inputtext" name="description" th:value="${selectedCategory.description}"></td>
+                            <td><input type="text" class="inputtext" name="description" th:field="*{description}" th:value="${category.description}"></td>
                         </tr>
                         <tr>
                             <td height="5">&nbsp;</td>
@@ -145,6 +146,7 @@
                             <td class="tdcontent">
                                 <input class="inputtext" type="text" size="4" name="cnt">개(1~20)
                             </td>
+                            <td th:if="${errorMessage}" th:text="${errorMessage}"></td>
                         </tr>
                         <tr>
                             <td width="150" class="inputlabel">설명 :</td>

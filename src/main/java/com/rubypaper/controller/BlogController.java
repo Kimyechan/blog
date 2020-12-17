@@ -8,9 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/blog")
-@SessionAttributes({"user", "myBlogCreated", "myBlogId"})
+@SessionAttributes({"user", "myBlogCreated", "myBlogId", "blog"})
 public class BlogController {
 
     private final BlogService blogService;
@@ -125,7 +129,7 @@ public class BlogController {
         }
         Optional<Blog> myBlog = blogService.findMyBlog(user.getId());
         if (myBlog.isPresent()) {
-            model.addAttribute("myBlog", myBlog.get());
+            model.addAttribute("blog", myBlog.get());
         } else {
             return "redirect:/blog/view/list";
         }
@@ -134,7 +138,10 @@ public class BlogController {
     }
 
     @PostMapping("/update")
-    public String update(MultipartFile file, Blog blog) throws IOException {
+    public String update(MultipartFile file, @Valid Blog blog, BindingResult bindingResult, Model model) throws IOException {
+        if (bindingResult.hasErrors()) {
+            return "blogadmin_basic";
+        }
         Optional<Blog> olderBlog = blogService.findBlog(blog.getId());
         if (olderBlog.isEmpty()) {
             return "redirect:/blog/view/list";
