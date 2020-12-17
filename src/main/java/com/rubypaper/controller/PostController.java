@@ -5,6 +5,7 @@ import com.rubypaper.domain.post.Post;
 import com.rubypaper.domain.user.User;
 import com.rubypaper.repository.UserRepository;
 import com.rubypaper.service.PostService;
+import com.rubypaper.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -18,7 +19,7 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
-@Lazy
+@SessionAttributes("user")
 public class PostController {
 
     @Autowired
@@ -40,11 +41,13 @@ public class PostController {
     // 게시글 상세 조회
     @GetMapping("/{postNum}")
     public String getPost(@PathVariable("postNum") Long id, Model model ) {
-        // User user = (User)model.getAttribute("user");
-
+        User user = (User)model.getAttribute("user");
+        // Optional<User> userName = userRepository.findByUserid(user.getName());
         Post postToRead = postService.readPost(id);
+
         model.addAttribute("post", postToRead);
         model.addAttribute("comment", new Comment());
+        model.addAttribute("user", user);
 
         return "blogmain_detail";
     }
