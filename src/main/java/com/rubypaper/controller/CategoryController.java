@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/category")
-@SessionAttributes({"user", "myBlog", "category", })
+@SessionAttributes({"user", "myBlog"})
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
@@ -65,7 +65,7 @@ public class CategoryController {
 
     @PostMapping("/update")
     public String updateProcess(@Valid Category category, BindingResult bindingResult,
-            RedirectAttributes redirectAttributes) {
+                                RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
             redirectAttributes.addAttribute("errorMessage", fieldError.getDefaultMessage());

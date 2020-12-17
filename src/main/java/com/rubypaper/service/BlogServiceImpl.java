@@ -50,7 +50,7 @@ public class BlogServiceImpl implements BlogService {
                 .tag("java")
                 .user(user)
                 .fileName("j2eelogo.jpg")
-                .cntDisplayPost(0)
+                .cntDisplayPost(1)
                 .status(BlogStatus.OPERATE)
                 .build();
 
