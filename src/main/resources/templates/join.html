@@ -5,7 +5,7 @@
     <title>JBlog 회원가입</title>
     <Link rel="stylesheet" href="css/theme.css">
     <style>
-        span {
+        div,span {
             margin-left: 60px;
         }
 
@@ -56,31 +56,45 @@
             document.join.submit();
         }
 
-        $('.myButton').on("click",function () {
-            let data = {
-                userid: $('.userid').val()
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "/idCheck",
-                data: JSON.stringify(data), // http body데이터
-                contentType:"application/json; charset=utf-8", // body데이터 어떤 타입
-                dataType:"json" // 요청을 서버로해서 응답이 왔을 때
-            }).done(function (resp){
-                if ($.trim(resp) == "YES") {
-                    if ($('.userid').val() != '') {
-                        $('.checkMsg').html('<p style="color:blue">사용가능한 ID 입니다!</p>');
-                    }
-                } else {
-                    if ($('.userid').val() != '') {
-                        $('.checkMsg').html('<p style="color:red">이미 사용중인 ID 입니다. 다른 ID를 입력하세요.</p>');
-                        $('.userid').val('');
-                        $('.userid').focus();
-                    }
-                }
-            })
-        });
+        // $(".myButton").on("click", function () {
+        //     var data = {
+        //         userid: $(".userid").val()
+        //     }
+        //
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/idCheck",
+        //         data: JSON.stringify(data), // http body데이터
+        //         contentType: "application/json; charset=utf-8", // body데이터 어떤 타입
+        //         dataType: "json", // 요청을 서버로해서 응답이 왔을 때
+        //
+        //         success: function (resp) {
+        //             if (resp == "YES"){
+        //                 $(".checkMsg").html('<p style="color:blue">사용가능한 ID 입니다!</p>');
+        //             } else{
+        //                 $(".checkMsg").html('<p style="color:red">이미 사용중인 ID 입니다. 다른 ID를 입력하세요.</p>');
+        //                 $(".userid").val('');
+        //                 $(".userid").focus();
+        //             }
+        //
+        //
+        //             // if ($.trim(resp) == "YES") {
+        //             //     if ($('.userid').val() != '') {
+        //             //         $('.checkMsg').html('<p style="color:blue">사용가능한 ID 입니다!</p>');
+        //             //     }
+        //             // } else {
+        //             //     if ($('.userid').val() != '') {
+        //             //         $('.checkMsg').html('<p style="color:red">이미 사용중인 ID 입니다. 다른 ID를 입력하세요.</p>');
+        //             //         $('.userid').val('');
+        //             //         $('.userid').focus();
+        //             //     }
+        //             // }
+        //         },
+        //         error: function (){
+        //             alert("stringify err");
+        //         }
+        //     })
+        // });
     </script>
 </head>
 <body>
@@ -93,47 +107,50 @@
             <tr>
                 <td height="30" colspan="10" align="left" class="tdcontent">
                     <th:block th:if="${join == null}">
-                        <span> 아이디 :<input type="text" class="userid" name="userid" size="20"></span>
-                        <input type="button" class="myButton" value="중복체크">
-                        <div  class="checkMsg" style="color: red"></div>
+                        <span> 아이디 :<input type="text" class="userid" name="userid" size="20" placeholder="5글자 이상 입력해주세요"></span>
+                        <div class="checkMsg" th:if="${message == null}"  style="color: red"></div>
+                        <div class="checkMsg" th:if="${message != null}" th:text="${message}" style="color: red"></div>
                     </th:block>
                     <th:block th:if="${join != null}">
-                        <span> 아이디 :<input type="text" class="userid" name="userid" th:value="${join.getUserid()}" size="20"></span>
-                        <input type="button" class="myButton"  value="중복체크">
-                        <div  class="checkMsg" style="color: red"></div>
+                        <span> 아이디 :<input type="text" class="userid" name="userid" th:value="${join.getUserid()}" placeholder="5글자 이상 입력해주세요"
+                                           size="20"></span>
+                        <div class="checkMsg" th:if="${message == null}"  style="color: red"></div>
+                        <div class="checkMsg" th:if="${message != null}" th:text="${message}" style="color: red"></div>
                     </th:block>
                 </td>
             </tr>
             <tr>
                 <td height="30" colspan="10" align="left" class="tdcontent">
                     <th:block th:if="${join == null}">
-                        <span> 비밀번호: <input type="password" name="password" size="20"></span>
+                        <span> 비밀번호: <input type="password" name="password" size="20" placeholder="5글자 이상 입력해주세요"></span>
                     </th:block>
                     <th:block th:if="${join != null}">
-                        <span> 비밀번호: <input type="password" name="password" th:value="${join.getPassword()}" size="20"></span>
+                        <span> 비밀번호: <input type="password" name="password" th:value="${join.getPassword()}" size="20" placeholder="5글자 이상 입력해주세요"></span>
                     </th:block>
                 </td>
             </tr>
             <tr>
                 <td height="50" colspan="10" align="left" class="tdcontent">
                     <th:block th:if="${returnJoinPasswordCheck == null}">
-                        <span> 비밀번호 확인: <input type="password" name="passwordCheck" size="20" onmousemove="password_Check()"></span>
+                        <span> 비밀번호 확인: <input type="password" name="passwordCheck" size="20" placeholder="5글자 이상 입력해주세요"
+                                               onmousemove="password_Check()"></span>
                         <span style="color: red" class="pwcheck2"></span>
                     </th:block>
                     <th:block th:if="${returnJoinPasswordCheck != null}">
-                    <span> 비밀번호 확인: <input type="password" name="passwordCheck" size="20" th:value="${returnJoinPasswordCheck}"
+                    <span> 비밀번호 확인: <input type="password" name="passwordCheck" size="20" placeholder="5글자 이상 입력해주세요"
+                                           th:value="${returnJoinPasswordCheck}"
                                            onmousemove="password_Check()"></span>
-                    <span style="color: red" class="pwcheck2"></span>
+                        <span style="color: red" class="pwcheck2"></span>
                     </th:block>
                 </td>
             </tr>
             <tr>
                 <td height="30" colspan="10" align="left" class="tdcontent">
                     <th:block th:if="${join == null}">
-                        <span> 이 름 : <input type="text" name="name" size="20"> </span>
+                        <span> 이 름 : <input type="text" name="name" size="20" placeholder="2글자 이상 입력해주세요"> </span>
                     </th:block>
                     <th:block th:if="${join != null}">
-                        <span> 이 름 : <input type="text" name="name" th:value="${join.getName()}" size="20"> </span>
+                        <span> 이 름 : <input type="text" name="name" th:value="${join.getName()}" size="20" placeholder="2글자 이상 입력해주세요"> </span>
                     </th:block>
 
                 </td>

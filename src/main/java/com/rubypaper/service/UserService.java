@@ -8,16 +8,17 @@ public interface UserService {
 
     void logout();
 
-    boolean signUp(User user);
+    String signUp(User user);
 
     /**
      * 회원탈퇴
      */
-    void deleteUser(User user);
+    void withdrawal(User user);
     /**
      * 관리자 사용자 구분
      */
     void checkRole();
 
-    String idCheck(String id);
+
+    void updateUser(User user);
 }

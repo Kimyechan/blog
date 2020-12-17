@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -20,11 +22,13 @@ public class UserController{
     @Autowired
     private UserService userService;
 
+    // 메인페이지
     @GetMapping("/index")
     public String index(){
         return "blogsystem_search";
     }
 
+    // 로그인 뷰로 이동
     @GetMapping("/login")
     public String login(){
         System.out.println("---> login 요청");
@@ -32,10 +36,10 @@ public class UserController{
     }
 
 
+    // 로그인 성공해서 role에 따른 페이지 리다이렉션
     @GetMapping("/loginSuccess")
     public String loginSuccess(@AuthenticationPrincipal(expression = "user") User user, Model model){
         System.out.println("---> loginSuccess 이동");
-        System.out.println("---> role " + user.getRole().toString().equals("ROLE_ADMIN"));
 
         if(blogService.findMyBlog(user.getId()).isPresent()) {
             model.addAttribute("myBlogCreated", true);
@@ -54,17 +58,20 @@ public class UserController{
         }
     }
 
+    // 권한 접근 매핑인데 사용 안하는 듯
     @GetMapping("/accessDenied")
     public void accessDenied(){
         System.out.println("---> accessDenied 이동");
     }
 
+    // 관리자 페이지로 이동
     @GetMapping("/admin")
     public String adminMain(){
         System.out.println("---> adminMain 이동");
         return "redirect:/blog/view/list";
     }
 
+    // 회원 페이지로 이동
     @GetMapping("/user")
     public String getMemberMain(@AuthenticationPrincipal(expression = "user") User user, Model model){
         System.out.println("---> getMemberMain 이동");
@@ -80,32 +87,58 @@ public class UserController{
 
     }
 
+    // join 뷰로 이동
     @GetMapping("/join")
     public void join(){
         System.out.println("---> join 이동");
     }
 
+    // 회원가입했을 때 성공 실패에 따라 성공은 joinsueccess.thml로 이동, 실패시 다시 join.html로 이동
     @PostMapping("/join")
     public String joinCheck(@RequestParam("passwordCheck") String passwordCheck, User user, Model model){
-        System.out.println("---> joinSuccess 이동");
+        System.out.println("---> joinCheck 이동");
 
+       String joinCheck = userService.signUp(user);
+        System.out.println("save :" + joinCheck);
         model.addAttribute("join",user);
-
-       Boolean joinCheck = userService.signUp(user);
-       if (joinCheck){
-//           model.addAttribute("join", user.getName());
+       if (joinCheck.equals("success") || joinCheck.equals("save")){
            return "joinSuccess";
+       } else if (joinCheck.equals("duplicated")){
+           String str = "중복된 아이디 입니다";
+           model.addAttribute("message", str);
+           return "join";
        } else{
+
            model.addAttribute("returnJoinPasswordCheck", passwordCheck);
            return "join";
        }
-    }
-    @PostMapping("/idCheck")
-    public String id_check(@RequestBody String id){
-        System.out.println(id);
-        String str = userService.idCheck(id);
-        return str;
+
     }
 
+    // mypage로 뷰로 매핑
+    @GetMapping("/mypage")
+    public void mypage(User user, Model model){
+        model.addAttribute("user", user);
+    }
 
+    // mypage에서 정보수정
+    @PostMapping("/mypage")
+    public String mypage(User user){
+        userService.updateUser(user);
+        return "redirect:/index";
+    }
+
+    // 회원탈퇴 페이지로 매핑
+    @GetMapping("/withdrawal")
+    public void getWithdrawal(User user, Model model){
+        model.addAttribute("withdrawal", user);
+    }
+
+    // 회원 탈퇴 페이지에서 회원 탈퇴를 눌렀을 때 완전히 회원 탈퇴
+    @GetMapping("/withdrawalDo")
+    public String postWithdrawal(User user, HttpSession session){
+        userService.withdrawal(user);
+        session.invalidate();
+        return "redirect:/index";
+    }
 }
