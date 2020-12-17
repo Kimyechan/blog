@@ -2,55 +2,69 @@ package com.rubypaper.controller;
 
 import com.rubypaper.domain.comment.Comment;
 import com.rubypaper.domain.post.Post;
-import com.rubypaper.repository.CommentRepository;
+import com.rubypaper.domain.user.User;
 import com.rubypaper.repository.PostRepository;
+import com.rubypaper.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/comment")
 public class CommentController {
     @Autowired
-    private final CommentRepository commentRepository;
+    private final CommentService commentService;
 
     @Autowired
     private final PostRepository postRepository;
 
-    @GetMapping("/blogmain_detail/{postId}")
-    public List<Comment> getPostComment(@PathVariable long postId) {
-        Post post = postRepository.findById(postId).get();
-        return commentRepository.findCommentsByPost(post);
+    // 코멘트 작성
+    @PostMapping("/addComment")
+    public String registerComment(Long postId, String commentName, String comment, Post post, User user) {
+        user.setName(commentName);
+        post.setId(postId);
+        commentService.saveComment(comment, post, user);
+
+        return "redirect:/post/" + postId;
     }
 
-    @PostMapping("/blogadmin_write")
-    public Comment registerComment(@PathVariable long id, @RequestBody Comment comment) {
-        Optional<Post> post = postRepository.findById(id);
-        comment.setPost(post.get());
-        commentRepository.save(comment);
-        return comment;
+    // 코멘트 리스트
+    @GetMapping("/list")
+    public String CommentList(Model model, Long postId) {
+        List<Comment> commentList = commentService.getCommentList();
+        model.addAttribute("commentList", commentList);
+
+        return "redirect:/post" + postId;
     }
 
-    @PostMapping("/blogmain_detail/{postId}")
-    public Comment updateComment(@PathVariable long id, @PathVariable long postId, @RequestBody Comment comment){
-        Optional<Post> post = postRepository.findById(postId);
-        comment.setPost(post.get());
+    // 코멘트 수정
+    @GetMapping("/{commentNum}")
+    public String updateComment(@PathVariable("commentNum") long comNum, Model model) {
+        Comment comment = commentService.readComm(comNum);
+        model.addAttribute("comment", comment);
 
-        Comment newComment = commentRepository.findById(id).get();
-        newComment.setContent(comment.getContent());
-        newComment.setUsername(comment.getUsername());
-
-        return newComment;
+        return "blogadmin_update";
     }
 
-    // @GetMapping("/blogmain_detail/{postId}")
-    public String deleteComment(@PathVariable Long id, @PathVariable Long postId){
-        commentRepository.deleteById(id);
-        return "blogmain_detail";
+    @PostMapping("/{commentNum}")
+    public String updateComment(Long postId, String commentName, String comment, Post post, User user) {
+        user.setName(commentName);
+        post.setId(postId);
+        commentService.saveComment(comment, post, user);
+
+        return "redirect:/post/" + postId;
+    }
+
+    // 코멘트 삭제
+    @GetMapping("/delete/{commentNum}")
+    public String deleteComment(@PathVariable("commentNum") Long id) {
+        commentService.deleteComment(id);
+        return "redirect:/post/list";
     }
 
 }

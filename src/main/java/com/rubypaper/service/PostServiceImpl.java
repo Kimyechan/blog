@@ -2,9 +2,8 @@ package com.rubypaper.service;
 
 import com.rubypaper.domain.post.Post;
 import com.rubypaper.repository.PostRepository;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,40 +14,23 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
+
+    @Autowired
     private final PostRepository postRepository;
 
-    @Override
-    public Post registerPost(Post post) {
-        post.setRegDate(LocalDateTime.now());
-        return postRepository.save(post);
-    }
-
-    @Override
-    public Post savePost(Post post) {
-        Post addPost = Post.builder()
-                .id(post.getId())
-                .title(post.getTitle())
-                .postNum(post.getPostNum())
-                .content(post.getContent())
-                .regDate(post.getRegDate())
-                .comments(post.getComments())
-                .build();
-
-        return postRepository.save(addPost);
-    }
-
+    // 게시글 목록
     @Override
     public List<Post> getpostList() {
         List<Post> postList = postRepository.findAll();
         List<Post> getPostList = new ArrayList<>();
+        // int totalPostCnt // 게시글 수
 
         for(Post post : postList) {
             Post postBuilder = Post.builder()
                     .id(post.getId())
-                    .postNum(post.getPostNum())
                     .title(post.getTitle())
                     .content(post.getContent())
-                    .comments(post.getComments())
+                    .commentList(post.getCommentList())
                     .regDate(post.getRegDate())
                     .build();
             getPostList.add(postBuilder);
@@ -56,59 +38,46 @@ public class PostServiceImpl implements PostService {
         return getPostList;
     }
 
+    // 게시글 상세보기
     @Override
-    public Post getPost(Long id) {
-        Optional<Post> post = postRepository.findById(id);
-        Post getPost = post.get();
+    public Post readPost(Long id){
+        Optional<Post> postOptional = postRepository.findById(id);
+        Post post = postOptional.get();
 
-        Post post1 = Post.builder()
-                .id(getPost.getId())
-                .postNum(getPost.getPostNum())
-                .title(getPost.getTitle())
-                .content(getPost.getContent())
-                .comments(getPost.getComments())
-                .regDate(getPost.getRegDate())
+        Post postBuilder = Post.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .commentList(post.getCommentList())
+                .blog(post.getBlog())
+                .regDate(post.getRegDate())
                 .build();
 
-        return post1;
+        return postBuilder;
     }
 
-
-
+    // 게시글 등록, 수정
     @Override
-    public void searchByCategory() {
-
+    public Post savePost(Post post) {
+        post.setRegDate(LocalDateTime.now());
+        Post addPost = Post.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .regDate(post.getRegDate())
+                .commentList(post.getCommentList())
+                .build();
+        return postRepository.save(addPost);
     }
 
-    @Override
-    public void searchPost() {
-
-    }
-
-    
-
-    @Override
-    public Post updatePost(Long id, Post post) {
-        Post oldPost = postRepository.findById(id).orElse(null);
-
-        if(oldPost == null){
-            try {
-                throw new NotFoundException(id + " not found");
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-
-        oldPost.setContent(post.getContent());
-        oldPost.setTitle(post.getTitle());
-        // oldPost.setCategory(post.getCategory);
-
-        return oldPost;
-    }
-
+    // 게시글 삭제
     @Override
     public void deletePost(Long id) {
-        Post oldPost = postRepository.findById(id).orElse(null);
+        postRepository.deleteById(id);
+        /*Post oldPost = postRepository.findById(id);
+        // 게시글 수정에 따른 카테고리 내 게시글 카운트
+        // Category category = oldPost.getCategory();
+        // categoryRepository.updatePostCnt(category.getId(), category.getPostCnt() -1);
 
         if(oldPost == null){
             try {
@@ -116,11 +85,7 @@ public class PostServiceImpl implements PostService {
             } catch (NotFoundException e) {
                 e.printStackTrace();
             }
-        }
-
-
-
+        }*/
     }
-
 
 }
