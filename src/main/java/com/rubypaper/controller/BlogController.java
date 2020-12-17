@@ -1,19 +1,16 @@
 package com.rubypaper.controller;
 
 import com.rubypaper.domain.blog.Blog;
+import com.rubypaper.domain.blog.BlogStatus;
 import com.rubypaper.domain.user.User;
 import com.rubypaper.service.BlogService;
 import lombok.RequiredArgsConstructor;
-import org.dom4j.rule.Mode;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -22,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/blog")
-@SessionAttributes({"user", "myBlogCreated"})
+@SessionAttributes({"user", "myBlogCreated", "myBlogId"})
 public class BlogController {
 
     private final BlogService blogService;
@@ -33,12 +30,24 @@ public class BlogController {
 
         List<Blog> blogList = blogPage.getContent();
         model.addAttribute("blogList", blogList);
+        User user = (User) model.getAttribute("user");
+        if(user != null) {
+            if (blogService.findMyBlog(user.getId()).isPresent()) {
+                model.addAttribute("myBlogCreated", true);
+            } else {
+                model.addAttribute("myBlogCreated", false);
+            }
+        }
 
         return "blogsystem_search";
     }
 
     @GetMapping("/search")
     public String blog(String searchCondition, String searchKeyword, Model model) {
+        if (searchKeyword == null) {
+            searchKeyword = "";
+        }
+
         List<Blog> blogList = blogService.searchBlog(searchCondition, searchKeyword);
 
         model.addAttribute("blogList", blogList);
@@ -66,6 +75,7 @@ public class BlogController {
         Optional<Blog> blog = blogService.findMyBlog(user.getId());
 
         if(blog.isPresent()) {
+            model.addAttribute("myBlogId", blog.get().getId());
             model.addAttribute("blog", blog.get());
             model.addAttribute("postList", blog.get().getPostList());
             model.addAttribute("categoryList", blog.get().getCategories());
@@ -90,6 +100,7 @@ public class BlogController {
             if (myBlog.isPresent()) {
                 if (myBlog.get().getId().equals(id)) {
                     model.addAttribute("isMyBlog", true);
+                    model.addAttribute("myBlogId", myBlog.get().getId());
                 } else {
                     model.addAttribute("isMyBlog", false);
                 }
@@ -151,24 +162,37 @@ public class BlogController {
         return "redirect:/blog/managing/basic";
     }
 
-    @GetMapping("/blogadmin_basic")
-    public String blogadmin_basic() {
-        return "blogadmin_basic";
-    }
-
-    @GetMapping("/blogadmin_category")
-    public String blogadmin_category() {
-        return "blogadmin_category";
-    }
-
-    @GetMapping("/blogadmin_request_remove")
-    public String blogadmin_request_remove() {
+    @GetMapping("/view/delete")
+    public String deleteView() {
         return "blogadmin_request_remove";
     }
 
-    @GetMapping("/blogadmin_write")
-    public String blogadmin_write() {
-        return "blogadmin_write";
+    @PostMapping("/deleteRequest")
+    public String deleteRequestProcess(String action, Model model) {
+        if (action.equals("동의")) {
+            Long blogId = (Long) model.getAttribute("myBlogId");
+            Optional<Blog> blog = blogService.findBlog(blogId);
+            Blog deleteBlog = blog.get();
+
+            deleteBlog.setStatus(BlogStatus.REMOVE_REQUEST);
+            blogService.saveBlog(deleteBlog);
+        } else if (action.equals("취소")) {
+            return "redirect:/blog/managing/basic";
+        }
+
+        return "redirect:/blog/view/list";
     }
 
+    @GetMapping("/view/deleteList")
+    public String deleteListView(Model model) {
+        List<Blog> deleteList = blogService.findByBlogStatus(BlogStatus.REMOVE_REQUEST);
+        model.addAttribute("deleteList", deleteList);
+        return "blogsystem_manage";
+    }
+
+    @PostMapping("/delete")
+    public String deleteProcess(Long deleteBlogId) {
+        blogService.deleteBlog(deleteBlogId);
+        return "redirect:/blog/view/deleteList";
+    }
 }

@@ -4,6 +4,7 @@ import com.rubypaper.domain.category.Category;
 import com.rubypaper.domain.post.Post;
 import com.rubypaper.domain.user.User;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;

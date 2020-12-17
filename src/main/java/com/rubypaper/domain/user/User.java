@@ -12,9 +12,14 @@ import java.util.Collection;
 @Setter
 @Table(name = "BLOG_USER")
 @Entity
+@SequenceGenerator(
+        name = "BLOG_USER_SEQ_GENERATOR",
+        sequenceName = "BLOG_USER_SEQ",
+        initialValue = 2, allocationSize = 1)
 public class User{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "BLOG_USER_SEQ_GENERATOR")
     private Long id;
 
     private String userid;
