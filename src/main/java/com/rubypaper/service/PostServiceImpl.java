@@ -1,6 +1,8 @@
 package com.rubypaper.service;
 
+import com.rubypaper.domain.category.Category;
 import com.rubypaper.domain.post.Post;
+import com.rubypaper.repository.CategoryRepository;
 import com.rubypaper.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private final PostRepository postRepository;
+    private final CategoryRepository categoryRepository;
 
     // 게시글 목록
     @Override
@@ -58,14 +61,17 @@ public class PostServiceImpl implements PostService {
 
     // 게시글 등록, 수정
     @Override
-    public Post savePost(Post post) {
+    public Post savePost(Post post, Long categoryId) {
+    //public Post savePost(Post post, Category category) {
         post.setRegDate(LocalDateTime.now());
+
         Post addPost = Post.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .regDate(post.getRegDate())
                 .commentList(post.getCommentList())
+                //.category(category)
                 .build();
         return postRepository.save(addPost);
     }

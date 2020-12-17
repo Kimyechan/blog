@@ -1,5 +1,6 @@
 package com.rubypaper.service;
 
+import com.rubypaper.domain.category.Category;
 import com.rubypaper.domain.post.Post;
 
 import java.util.List;
@@ -9,7 +10,8 @@ public interface PostService {
 
     Post readPost(Long id);
 
-    Post savePost(Post post);
+    // Post savePost(Post post, Category category);
+    Post savePost(Post post, Long category);
 
     void deletePost(Long id);
 
