@@ -50,7 +50,7 @@ public class BlogServiceImpl implements BlogService {
                 .tag("java")
                 .user(user)
                 .fileName("j2eelogo.jpg")
-                .cntDisplayPost(10)
+                .cntDisplayPost(0)
                 .status(BlogStatus.OPERATE)
                 .build();
 
@@ -58,7 +58,9 @@ public class BlogServiceImpl implements BlogService {
 
         Category category = Category.builder()
                 .name("미분류")
-                .displayType("미분류")
+                .displayType("타이틀")
+                .cnt(10)
+                .description("미분류 카테고리 입니다")
                 .blog(blog)
                 .build();
 
