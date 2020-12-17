@@ -19,9 +19,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@SequenceGenerator(
+        name = "POST_SEQ_GENERATOR",
+        sequenceName = "POST_SEQ",
+        initialValue = 1, allocationSize = 1)
 public class Post {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "POST_SEQ_GENERATOR")
+    @Column(name = "POST_ID")
     private Long id;
 
     @Column(length = 50, nullable = false)
@@ -46,13 +52,24 @@ public class Post {
     @JoinColumn(name = "BLOG_ID")
     private Blog blog;
 
+//    @Builder
+//    public Post(Long id, String title, String content, List<Comment> comments, LocalDateTime regDate) {
+//        this.id = id;
+//        this.title = title;
+//        this.content = content;
+//        this.commentList = comments;
+//        this.regDate = regDate;
+//    }
+
     @Builder
-    public Post(Long id, String title, String content, List<Comment> comments, LocalDateTime regDate) {
+    public Post(Long id, String title, String content,
+                LocalDateTime regDate, Category category, Blog blog) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.commentList = comments;
         this.regDate = regDate;
+        this.category = category;
+        this.blog = blog;
     }
 
 }

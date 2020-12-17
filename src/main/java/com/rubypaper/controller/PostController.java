@@ -22,7 +22,7 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
-@SessionAttributes({"user", "blog"})
+@SessionAttributes({"user", "blog", "isMyBlog"})
 public class PostController {
 
     @Autowired
@@ -79,7 +79,7 @@ public class PostController {
 
     @PostMapping("/addPost.do")
     public String registerPost(Post post, User user, Long categoryId) {
-        postService.savePost(post, categoryId);
+        Post savePost = postService.savePost(post, categoryId);
 
         
 //        Long category = Long.valueOf(request.getParameter("category"));

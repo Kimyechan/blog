@@ -1,5 +1,6 @@
 package com.rubypaper.service;
 
+import com.rubypaper.domain.blog.Blog;
 import com.rubypaper.domain.category.Category;
 import com.rubypaper.domain.post.Post;
 import com.rubypaper.repository.CategoryRepository;
@@ -33,7 +34,7 @@ public class PostServiceImpl implements PostService {
                     .id(post.getId())
                     .title(post.getTitle())
                     .content(post.getContent())
-                    .commentList(post.getCommentList())
+//                    .commentList(post.getCommentList())
                     .regDate(post.getRegDate())
                     .build();
             getPostList.add(postBuilder);
@@ -51,7 +52,7 @@ public class PostServiceImpl implements PostService {
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
-                .commentList(post.getCommentList())
+//                .commentList(post.getCommentList())
                 .blog(post.getBlog())
                 .regDate(post.getRegDate())
                 .build();
@@ -62,17 +63,24 @@ public class PostServiceImpl implements PostService {
     // 게시글 등록, 수정
     @Override
     public Post savePost(Post post, Long categoryId) {
-    //public Post savePost(Post post, Category category) {
+        Optional<Category> categoryTemp = categoryRepository.findWithBlogByCategoryId(categoryId);
+        Category category = categoryTemp.get();
+        Blog blog = category.getBlog();
+
+        if (categoryTemp.isEmpty()) {
+            return null;
+        }
+
         post.setRegDate(LocalDateTime.now());
 
         Post addPost = Post.builder()
-                .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .regDate(post.getRegDate())
-                .commentList(post.getCommentList())
-                //.category(category)
+                .category(category)
+                .blog(blog)
                 .build();
+
         return postRepository.save(addPost);
     }
 

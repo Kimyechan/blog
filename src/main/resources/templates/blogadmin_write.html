@@ -34,9 +34,9 @@
 				<td width="530" valign="top" class="tdcontent">
 					<!-- 메뉴 시작 -->
 					<a class="title" th:href="@{/blog/managing/basic}"><b>기본설정</b></a>&nbsp;&nbsp;
-					<a class="title" th:href="getCategoryList.do"><b>카테고리</b></a>&nbsp;&nbsp;
+					<a class="title" th:href="@{/category/view/managing}"><b>카테고리</b></a>&nbsp;&nbsp;
 					<a class="title" th:href="@{/post/newPost}"><b>글작성</b></a>&nbsp;&nbsp;
-					<a class="title" href="javascript:popup();"><b>블로그삭제</b></a>&nbsp;&nbsp;
+					<a class="title" th:href="@{/blog/view/delete}"><b>블로그삭제</b></a>&nbsp;&nbsp;
 					<!-- 메뉴 끝 -->
 				</td>
 			</tr>
@@ -54,11 +54,10 @@
 									<input class="inputtext" type="text" size="60" name="title">
 								</td>
 								<td width="300">
-									<select class="inputtextarea categorytitle" id="category" >
+									<select class="inputtextarea categorytitle" th:name="categoryId" id="category" >
 										<option th:each="category : ${categoryList}"
 											th:value="${category.id}"
-												th:text="${category.name}"
-												th:name="categoryId">
+												th:text="${category.name}">
 											<!-- <input type="hidden" th:value="*{category.id}" name="categoryId" /> -->
 										</option>
 									</select>
