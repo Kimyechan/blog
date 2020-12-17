@@ -2,7 +2,6 @@ package com.rubypaper.controller;
 
 import com.rubypaper.domain.comment.Comment;
 import com.rubypaper.domain.post.Post;
-import com.rubypaper.repository.CommentRepository;
 import com.rubypaper.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
