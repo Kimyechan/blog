@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -40,7 +37,7 @@ public class UserController{
         System.out.println("---> loginSuccess 이동");
         System.out.println("---> role " + user.getRole().toString().equals("ROLE_ADMIN"));
 
-        if(blogService.findMyBlog(user.getId()) != null) {
+        if(blogService.findMyBlog(user.getId()).isPresent()) {
             model.addAttribute("myBlogCreated", true);
         } else {
             model.addAttribute("myBlogCreated", false);
@@ -72,7 +69,7 @@ public class UserController{
     public String getMemberMain(@AuthenticationPrincipal(expression = "user") User user, Model model){
         System.out.println("---> getMemberMain 이동");
         model.addAttribute("user", user);
-        return "blogsystem_search";
+        return "redirect:/blog/view/list";
     }
 
     @PostMapping("/user")
@@ -89,19 +86,26 @@ public class UserController{
     }
 
     @PostMapping("/join")
-    public String joinCheck(User user, Model model){
+    public String joinCheck(@RequestParam("passwordCheck") String passwordCheck, User user, Model model){
         System.out.println("---> joinSuccess 이동");
-        System.out.println("user : " + user.getName());
 
-        model.addAttribute("join", user.getName());
+        model.addAttribute("join",user);
+
        Boolean joinCheck = userService.signUp(user);
        if (joinCheck){
+//           model.addAttribute("join", user.getName());
            return "joinSuccess";
        } else{
-           model.addAttribute("retrunJoin", user);
+           model.addAttribute("returnJoinPasswordCheck", passwordCheck);
            return "join";
        }
-
     }
+    @PostMapping("/idCheck")
+    public String id_check(@RequestBody String id){
+        System.out.println(id);
+        String str = userService.idCheck(id);
+        return str;
+    }
+
 
 }

@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean signUp(User user) {
         System.out.println("---> singup 진행");
-        if (!(user.getUserid().length() < 5 && user.getPassword().length() < 5 && user.getName().length() < 5)) {
+        if (user.getUserid().length() > 5 && user.getPassword().length() > 5 && user.getName().length() > 2) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             return true;
@@ -48,5 +48,13 @@ public class UserServiceImpl implements UserService{
 
     }
 
+    @Override
+    public String idCheck(String userid) {
+        if (userRepository.findUserByUserid(userid).isEmpty()){
+            return "YES";
+        } else {
+            return "NO";
+        }
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.rubypaper.service;
 
 import com.rubypaper.domain.blog.Blog;
+import com.rubypaper.domain.blog.BlogStatus;
 import com.rubypaper.domain.category.Category;
 import com.rubypaper.domain.user.User;
 import com.rubypaper.repository.BlogRepository;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +26,8 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Page<Blog> blogListNonCondition() {
-        Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "cnt");
-        return blogRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "id");
+        return blogRepository.findAllWithUser(pageable);
     }
 
     @Override
@@ -47,8 +49,9 @@ public class BlogServiceImpl implements BlogService {
                 .title(title)
                 .tag("java")
                 .user(user)
-                .fileName("logo.jpg")
-                .cnt(0)
+                .fileName("j2eelogo.jpg")
+                .cntDisplayPost(10)
+                .status(BlogStatus.OPERATE)
                 .build();
 
         blogRepository.save(blog);
@@ -63,8 +66,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void deleteBlog() {
-
+    public void deleteBlog(Long deleteBlogId) {
+        blogRepository.deleteById(deleteBlogId);
     }
 
     @Override
@@ -73,7 +76,22 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog findMyBlog(Long userId) {
+    public Optional<Blog> findMyBlog(Long userId) {
         return blogRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Optional<Blog> findBlog(Long id) {
+        return blogRepository.findById(id);
+    }
+
+    @Override
+    public void saveBlog(Blog newBlog) {
+        blogRepository.save(newBlog);
+    }
+
+    @Override
+    public List<Blog> findByBlogStatus(BlogStatus blogStatus) {
+        return blogRepository.findByStatus(blogStatus);
     }
 }

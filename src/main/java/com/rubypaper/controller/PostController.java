@@ -3,61 +3,84 @@ package com.rubypaper.controller;
 import com.rubypaper.domain.post.Post;
 import com.rubypaper.repository.PostRepository;
 import com.rubypaper.service.PostService;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/post")
 public class PostController {
     @Autowired
     private final PostRepository postRepository;
 
-    @GetMapping("/")
-    public String hello() {
-        return "main page";
+    @Autowired
+    private final PostService postService;
+
+    @GetMapping("/list")
+    public String getAllPost(Model model) {
+        List<Post> postList = postService.getpostList();
+        model.addAttribute("postList", postList);
+
+        return "blogmain";
     }
 
-    @GetMapping("/blogmain_detail")
-    public List<Post> getAllPost() {
-        return postRepository.findAll();
+    @GetMapping("/{postNum}")
+    public String getPost(@PathVariable("postNum") long postNum, Model model) {
+        Post post = postService.getPost(postNum);
+        model.addAttribute("post", post);
+
+        return "blogmain_detail";
     }
 
-    @PostMapping("/blogmain")
-    public Post getPost(@PathVariable long id) {
-        Optional<Post> post = postRepository.findById(id);
-        return post.get();
+    @PostMapping("/view/update/{id}")
+    public String updatePostView(@PathVariable("id") long id, Model model) {
+        Post post = postService.getPost(id);
+        model.addAttribute("post", post);
+
+        return "blogadmin_write";
     }
 
-    @PostMapping("/blogmain_detail/{id}")
-    public Post updatePost(@PathVariable long id, @RequestBody Post newPost) {
-        Optional<Post> post = postRepository.findById(id);
+    @PostMapping("/update/{id}")
+    public String updatePost(@PathVariable("id") long id, Post post) {
+        postRepository.save(post);
 
-        post.get().setTitle(newPost.getTitle());
-        post.get().setContent(newPost.getContent());
-        post.get().setCategory(newPost.getCategory());
+        return "redirect:/post/view/{id}";
 
-        postRepository.save(post.get());
-
-        return post.get();
+//
+//        Optional<Post> post = postRepository.findById(id);
+//
+//        post.get().setTitle(newPost.getTitle());
+//        post.get().setContent(newPost.getContent());
+//        post.get().setCategory(newPost.getCategory());
+//
+//        postRepository.save(post.get());
+//
+//        return post.get();
     }
 
-    @PutMapping("/blogadmin_write")
-    public Post registerPost(@RequestBody Post post) {
-        Post newPost = postRepository.save(post);
-        return newPost;
+    @GetMapping("/view/newPost")
+    @PostMapping
+    public String registerPost() {
+        return "blogadmin_write";
     }
 
-    @PostMapping("{id}/delete")
-    public String deletePost(@PathVariable Long id) {
+    @PostMapping("/addPost.do")
+    public String registerPost(Post post) {
+        postService.savePost(post);
+        return "redirect:/post/list";
+
+//        Post newPost = postRepository.save(post);
+//        return newPost;
+    }
+
+    @DeleteMapping("post/{id}")
+    public String deletePost(@PathVariable("id") Long id) {
         postRepository.deleteById(id);
         return "redirect:/blogmain";
     }

@@ -18,4 +18,6 @@ public interface UserService {
      * 관리자 사용자 구분
      */
     void checkRole();
+
+    String idCheck(String id);
 }

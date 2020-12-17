@@ -1,8 +1,10 @@
 package com.rubypaper.domain.blog;
 
 import com.rubypaper.domain.category.Category;
+import com.rubypaper.domain.post.Post;
 import com.rubypaper.domain.user.User;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -34,13 +36,16 @@ public class Blog {
 
     private String tag;
 
-    private Integer cnt;
+    private Integer cntDisplayPost;
 
     @Enumerated(EnumType.STRING)
     private BlogStatus status;
 
     private String fileName;
 
-    @OneToMany(mappedBy = "blog")
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
+    private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
 }

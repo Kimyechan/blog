@@ -1,5 +1,5 @@
 package com.rubypaper.domain.blog;
 
 public enum BlogStatus {
-    OPERATE, REMOVE
+    OPERATE, REMOVE_REQUEST
 }
