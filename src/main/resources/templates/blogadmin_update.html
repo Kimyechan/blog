@@ -37,10 +37,10 @@
 				<td height="10" width="20">&nbsp;</td>
 				<td width="530" valign="top" class="tdcontent">
 					<!-- 메뉴 시작 -->
-					<a class="title" href="#"><b>기본설정</b></a>&nbsp;&nbsp;
-					<a class="title" href="#"><b>카테고리</b></a>&nbsp;&nbsp;
-					<b>글작성</b>&nbsp;&nbsp;
-					<a class="title" href="#"><b>블로그삭제</b></a>&nbsp;&nbsp;
+					<a class="title" th:href="@{/blog/managing/basic}"><b>기본설정</b></a>&nbsp;&nbsp;
+					<a class="title" th:href="@{/category/view/managing}"><b>카테고리</b></a>&nbsp;&nbsp;
+					<a class="title" th:href="@{/post/newPost}"><b>글작성</b></a>&nbsp;&nbsp;
+					<a class="title" th:href="@{/blog/view/delete}"><b>블로그삭제</b></a>&nbsp;&nbsp;
 					<!-- 메뉴 끝 -->
 				</td>
 			</tr>
@@ -59,10 +59,11 @@
 									<input th:value="${post.title}" class="inputtext" type="text" size="60" name="title">
 								</td>
 								<td width="300">
-									<select class="inputtextarea">
-										<option>스프링 프레임워크</option>
-										<option>자바</option>
-										<option>미분류</option>
+									<select class="inputtextarea categorytitle" th:name="categoryId" id="category" >
+										<option th:each="category : ${categoryList}"
+												th:value="${category.id}"
+												th:text="${category.name}">
+										</option>
 									</select>
 								</td>
 							</tr>

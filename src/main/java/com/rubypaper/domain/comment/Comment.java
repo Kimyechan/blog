@@ -38,12 +38,12 @@ public class Comment {
     @Transient
     private String userName;
 
-    @Builder
-    public Comment(Long id, String content, LocalDateTime regDate) {
-        this.id = id;
-        this.commContent = content;
-        this.regDate = regDate;
-    }
+//    @Builder
+//    public Comment(Long id, String content, LocalDateTime regDate) {
+//        this.id = id;
+//        this.commContent = content;
+//        this.regDate = regDate;
+//    }
 
     public Comment() { }
 
