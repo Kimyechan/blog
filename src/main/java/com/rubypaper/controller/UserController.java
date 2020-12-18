@@ -132,13 +132,14 @@ public class UserController{
     @GetMapping("/withdrawal")
     public void getWithdrawal(User user, Model model){
         model.addAttribute("withdrawal", user);
+
     }
 
     // 회원 탈퇴 페이지에서 회원 탈퇴를 눌렀을 때 완전히 회원 탈퇴
     @GetMapping("/withdrawalDo")
-    public String postWithdrawal(User user, HttpSession session){
+    public String postWithdrawal(User user){
+        System.out.println("user : " + user.toString());
         userService.withdrawal(user);
-        session.invalidate();
-        return "redirect:/index";
+        return "redirect:/logout";
     }
 }

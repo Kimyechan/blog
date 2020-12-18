@@ -61,7 +61,7 @@ public class PostServiceImpl implements PostService {
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
-//                .commentList(post.getCommentList())
+                .commentList(post.getCommentList())
                 .blog(post.getBlog())
                 .regDate(post.getRegDate())
                 .build();
