@@ -22,12 +22,6 @@ public class UserController{
     @Autowired
     private UserService userService;
 
-    // 메인페이지
-    @GetMapping("/index")
-    public String index(){
-        return "blogsystem_search";
-    }
-
     // 로그인 뷰로 이동
     @GetMapping("/login")
     public String login(){

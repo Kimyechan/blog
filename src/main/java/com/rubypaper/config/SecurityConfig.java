@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        security.authorizeRequests().antMatchers("/user/**").hasRole("MEMBER");
         security.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN");
         security.formLogin().loginPage("/login").defaultSuccessUrl("/loginSuccess",true);
-        security.logout().invalidateHttpSession(true).logoutSuccessUrl("/index");
+        security.logout().invalidateHttpSession(true).logoutSuccessUrl("/blog/view/list");
         security.exceptionHandling().accessDeniedPage("/accessDenied");
 
         security.userDetailsService(userDetailsService);

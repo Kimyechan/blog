@@ -84,6 +84,10 @@ public class BlogController {
             model.addAttribute("postList", blog.get().getPostList());
             model.addAttribute("categoryList", blog.get().getCategories());
             model.addAttribute("isMyBlog", true);
+            if(!blog.get().getPostList().isEmpty()) {
+                String writeUserName = blog.get().getPostList().get(0).getBlog().getUser().getName();
+                model.addAttribute("writeUserName", writeUserName);
+            }
         } else {
             return "redirect:/blog/view/list";
         }
@@ -117,6 +121,11 @@ public class BlogController {
 
         model.addAttribute("blog", selectedBlog.get());
         model.addAttribute("categoryList", selectedBlog.get().getCategories());
+        model.addAttribute("postList", selectedBlog.get().getPostList());
+        if(!selectedBlog.get().getPostList().isEmpty()) {
+            String writeUserName = selectedBlog.get().getPostList().get(0).getBlog().getUser().getName();
+            model.addAttribute("writeUserName", writeUserName);
+        }
 
         return "blogmain";
     }

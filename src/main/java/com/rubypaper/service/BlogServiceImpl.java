@@ -21,7 +21,6 @@ import java.util.Optional;
 public class BlogServiceImpl implements BlogService {
 
     private final BlogRepository blogRepository;
-//    private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
 
     @Override
