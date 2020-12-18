@@ -7,6 +7,9 @@ import com.rubypaper.repository.CategoryRepository;
 import com.rubypaper.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,9 +27,15 @@ public class PostServiceImpl implements PostService {
 
     // 게시글 목록
     @Override
-    public List<Post> getpostList() {
-        List<Post> postList = postRepository.findAll();
+    public List<Post> getpostList(Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        //pageable = PageRequest.of(page, 10, new Sort(Sort.Direction.DESC,"id");
+                //new Sort(Sort.Direction.DESC, "id")); // Sort 추가
+
+        List<Post> postList = (List<Post>) postRepository.findAll(pageable);
         List<Post> getPostList = new ArrayList<>();
+
+
         // int totalPostCnt // 게시글 수
 
         for(Post post : postList) {
@@ -60,7 +69,6 @@ public class PostServiceImpl implements PostService {
         return postBuilder;
     }
 
-    // 게시글 등록, 수정
     @Override
     public Post savePost(Post post, Long categoryId) {
         Optional<Category> categoryTemp = categoryRepository.findWithBlogByCategoryId(categoryId);
@@ -84,7 +92,26 @@ public class PostServiceImpl implements PostService {
         return postRepository.save(addPost);
     }
 
-    // 게시글 삭제
+    @Override
+    public Post updatePost(Post post, Long categoryId) {
+        Optional<Post> oldPost = postRepository.findById(post.getId());
+        Post newPost = oldPost.get();
+
+        Optional<Category> categoryTemp = categoryRepository.findWithBlogByCategoryId(categoryId);
+        Category category = categoryTemp.get();
+        Blog blog = category.getBlog();
+
+
+        if (categoryTemp.isEmpty()) {
+            return null;
+        }
+
+        newPost.setTitle(post.getTitle());
+        newPost.setContent(post.getContent());
+        newPost.setCategory(category);
+        return postRepository.save(newPost);
+    }
+
     @Override
     public void deletePost(Long id) {
         postRepository.deleteById(id);

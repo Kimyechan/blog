@@ -36,6 +36,9 @@ public class Post {
     @Column(nullable = false)
     private String content;
 
+    @Column(name="POST_COUNT")
+    private Integer postCnt;
+
     @CreatedDate
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     @Column(updatable = false)
