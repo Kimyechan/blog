@@ -11,6 +11,9 @@ import com.rubypaper.service.BlogService;
 import com.rubypaper.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +24,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/post")
+//@RequestMapping("/post")
 @SessionAttributes({"user", "blog", "isMyBlog"})
 public class PostController {
 
@@ -35,10 +38,11 @@ public class PostController {
     private final int postForPage = 12; // 한 페이지 당 포스트 개수
 
     // 게시글 전체 목록
-    @GetMapping("/list")
-    public String getAllPost(Model model) {
+    @GetMapping("/blog/post/list")
+    public String getAllPost(Model model,
+                             @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC, size = 2) Pageable pageable) {
         User user = (User) model.getAttribute("user");
-        List<Post> postList = postService.getpostList();
+        List<Post> postList = postService.getpostList(pageable);
 
         model.addAttribute("postList", postList);
         model.addAttribute("user", user);
@@ -47,7 +51,7 @@ public class PostController {
     }
 
     // 게시글 상세 조회
-    @GetMapping("/{postNum}")
+    @GetMapping("/blog/post/{postNum}")
     public String getPost(@PathVariable("postNum") Long id, Model model ) {
         User user = (User)model.getAttribute("user");
         Optional<Blog> blog = blogService.findMyBlog(user.getId());
@@ -64,7 +68,7 @@ public class PostController {
     }
 
     // 게시글 입력
-    @GetMapping("/newPost")
+    @GetMapping("/post/newPost")
     public String registerPost(Model model) {
         User user = (User)model.getAttribute("user");
         Optional<Blog> blog = blogService.findMyBlog(user.getId());
@@ -79,7 +83,8 @@ public class PostController {
 
     @PostMapping("/addPost.do")
     public String registerPost(Post post, User user, Long categoryId) {
-        Post savePost = postService.savePost(post, categoryId);
+        postService.savePost(post, categoryId);
+        return "redirect:/blog/view/myBlog";
 
         
 //        Long category = Long.valueOf(request.getParameter("category"));
@@ -90,27 +95,30 @@ public class PostController {
         //category.setId(Long.valueOf(categoryId));
         //Category newCategory = new Category();
         //postService.savePost(post, newCategory);
-        return "redirect:/post/list";
+
     }
 
     // 게시글 수정
-    @GetMapping("/update/{postNum}")
+    @GetMapping("/blog/post/update/{postNum}")
     public String updatePost(@PathVariable("postNum") long id, Model model) {
         Post post = postService.readPost(id);
+        User user = (User)model.getAttribute("user");
+        Optional<Blog> blog = blogService.findMyBlog(user.getId());
+
         model.addAttribute("post", post);
+        model.addAttribute("categoryList", blog.get().getCategories());
 
         return "blogadmin_update";
     }
 
-    @PostMapping(value = {"/update/{postNum}"})
-    public String updatePost(Post post, HttpServletRequest request) {
-        Long categoryId = Long.valueOf(request.getParameter("categorytitle"));
-        Category category = new Category();
-        category.setId(categoryId);
+    @PostMapping("blog/post/update/{postNum}")
+    public String updatePost(Post post, Long categoryId) {
+        //Long categoryId = Long.valueOf(request.getParameter("categorytitle"));
+        //Category category = new Category();
+        //category.setId(categoryId);
 
-        //postService.savePost(post, category);
-        postService.savePost(post, categoryId);
-        return "redirect:/post/" + post.getId();
+        postService.updatePost(post, categoryId);
+        return "redirect:/blog/post/" + post.getId();
 
         /* 관리자 / 사용자 구분
         boolean isUser;
@@ -122,10 +130,10 @@ public class PostController {
     }
 
     // 게시글 삭제
-    @GetMapping("/delete/{postNum}")
+    @GetMapping("/blog/post/delete/{postNum}")
     public String deletePost(@PathVariable("postNum") Long id) {
         postService.deletePost(id);
-        return "redirect:/post/list";
+        return "redirect:/blog/post/list";
     }
 
 }
