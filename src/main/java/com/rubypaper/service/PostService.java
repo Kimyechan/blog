@@ -2,16 +2,19 @@ package com.rubypaper.service;
 
 import com.rubypaper.domain.category.Category;
 import com.rubypaper.domain.post.Post;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface PostService {
-    List<Post> getpostList();
+    List<Post> getpostList(Pageable pageable);
 
     Post readPost(Long id);
 
     // Post savePost(Post post, Category category);
     Post savePost(Post post, Long category);
+
+    Post updatePost(Post post, Long category);
 
     void deletePost(Long id);
 

@@ -78,6 +78,7 @@ public class BlogController {
         User user = (User) model.getAttribute("user");
         Optional<Blog> blog = blogService.findMyBlog(user.getId());
 
+
         if(blog.isPresent()) {
             model.addAttribute("myBlogId", blog.get().getId());
             model.addAttribute("blog", blog.get());
