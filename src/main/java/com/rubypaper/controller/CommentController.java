@@ -32,7 +32,7 @@ public class CommentController {
         post.setId(postId);
         commentService.saveComment(comment, post, user);
 
-        return "redirect:/post/" + postId;
+        return "redirect:/blog/post/" + postId;
     }
 
     // 코멘트 리스트
