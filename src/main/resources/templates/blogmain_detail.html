@@ -54,17 +54,19 @@
 					<tr><td height="5">&nbsp;</td></tr>
 					<tr><td height="5">
 						<!-- comment list -->
+						<span th:if="${post != null}">
 						<table height="20" border="0" cellpadding="0" cellspacing="0" th:each="comment : ${post.commentList}">
 							<tr class="comm-list">
 								<td class="tdcontent">
-									<p>commented by <span th:text="${comment.userName}"></span> at <span th:text="${comment.regDate}"></span></p>
+									<p>commented by <span th:text="${comment.userName}"></span> at <span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm')}"></span></p><br>
+                                    <a th:href="@{${'/comment/'+comment.id}}">댓글 수정</a>&nbsp;&nbsp;<a th:href="@{${'/comment/delete/'+comment.id}}">댓글 삭제</a>
 								</td>
 								<td class="tdcontent" th:inline="text">
 									<p><span th:text="${comment.commContent}"></span></p>
 								</td>
 							</tr>
 						</table>
-
+						</span>
 						<form th:action="'/comment/addComment'" method="post">
 							<!-- new Comment List -->
 							<table width="500" height="20" border="0" cellpadding="0" cellspacing="0">

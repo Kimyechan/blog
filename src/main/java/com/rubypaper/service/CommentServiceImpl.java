@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -62,13 +63,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment readComm(Long id){
-        return null;
+        Optional<Comment> findComment = commentRepository.findWithPostByCommentId(id);
+        return findComment.orElse(null);
     }
 
     // 코멘트 삭제
     @Override
     public void deleteComment(Long commentId) {
-
+        commentRepository.deleteById(commentId);
     }
 
     /*

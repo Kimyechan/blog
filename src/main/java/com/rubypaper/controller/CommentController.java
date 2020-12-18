@@ -2,7 +2,9 @@ package com.rubypaper.controller;
 
 import com.rubypaper.domain.comment.Comment;
 import com.rubypaper.domain.post.Post;
+
 import com.rubypaper.domain.user.User;
+
 import com.rubypaper.repository.PostRepository;
 import com.rubypaper.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -44,8 +46,10 @@ public class CommentController {
 
     // 코멘트 수정
     @GetMapping("/{commentNum}")
-    public String updateComment(@PathVariable("commentNum") long comNum, Model model) {
-        Comment comment = commentService.readComm(comNum);
+    public String updateComment(@PathVariable("commentNum") String comNum, Model model) {
+        long commentNum = Long.parseLong(comNum);
+        Comment comment = commentService.readComm(commentNum);
+        model.addAttribute("post", comment.getPost());
         model.addAttribute("comment", comment);
 
         return "blogadmin_update";
@@ -62,8 +66,9 @@ public class CommentController {
 
     // 코멘트 삭제
     @GetMapping("/delete/{commentNum}")
-    public String deleteComment(@PathVariable("commentNum") Long id) {
-        commentService.deleteComment(id);
+    public String deleteComment(@PathVariable("commentNum") String id) {
+        long commentNum = Long.parseLong(id);
+        commentService.deleteComment(commentNum);
         return "redirect:/post/list";
     }
 
