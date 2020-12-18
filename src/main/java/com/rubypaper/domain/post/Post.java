@@ -51,7 +51,7 @@ public class Post {
     @JoinColumn(name = "CATEGORY_ID")
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "BLOG_ID")
     private Blog blog;
 

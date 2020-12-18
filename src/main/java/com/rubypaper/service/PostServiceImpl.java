@@ -7,6 +7,7 @@ import com.rubypaper.repository.CategoryRepository;
 import com.rubypaper.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -32,7 +33,9 @@ public class PostServiceImpl implements PostService {
         //pageable = PageRequest.of(page, 10, new Sort(Sort.Direction.DESC,"id");
                 //new Sort(Sort.Direction.DESC, "id")); // Sort 추가
 
-        List<Post> postList = (List<Post>) postRepository.findAll(pageable);
+//        List<Post> postList = (List<Post>) postRepository.findAll(pageable);
+        Page<Post> postListP = postRepository.findAll(pageable);
+        List<Post> postList = postListP.getContent();
         List<Post> getPostList = new ArrayList<>();
 
 
