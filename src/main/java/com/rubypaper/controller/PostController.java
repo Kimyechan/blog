@@ -111,7 +111,7 @@ public class PostController {
         return "blogadmin_update";
     }
 
-    @PostMapping("blog/post/update/{postNum}")
+    @PostMapping("/blog/post/update/{postNum}")
     public String updatePost(Post post, Long categoryId) {
         //Long categoryId = Long.valueOf(request.getParameter("categorytitle"));
         //Category category = new Category();
